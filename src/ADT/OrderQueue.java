@@ -18,23 +18,23 @@ import java.util.logging.Logger;
  * @author user1
  */
 public class OrderQueue<T> implements OrderQueueInterface<T> {
-
+    
     private Node<T> firstNode;
     private Node<T> lastNode;
     private int lastOdFrequency;
     private int size;
-
+    
     public OrderQueue() {
         firstNode = null;
         lastNode = null;
         size = 0;
     }
-
+    
     public boolean add(T newOrder) {
         Node newOd = new Node(newOrder);
         boolean ck = false;
         Node tempNode = lastNode;
-
+        
         if (isEmpty()) {
             firstNode = newOd;
             lastNode = newOd;
@@ -49,10 +49,10 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             ck = true;
             size++;
         }
-
+        
         return ck;
     }
-
+    
     public boolean add(T newOrder, int frequency) {
         Node newOd = new Node(newOrder);
         boolean ck = false;
@@ -69,16 +69,16 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 size++;
             } else {
                 Order od = (Order) tempNode.getData();
-
+                
                 while (tempNode != null && (((Order) newOrder).getDate()).equals(od.getDate())) {
                     afterNode = tempNode;
                     tempNode = tempNode.getPrevious();
-
+                    
                     if (tempNode != null) {
                         od = (Order) tempNode.getData();
                     }
                 }
-
+                
                 if (tempNode == null) {       //the new order date is same with the whole order record 
                     tempNode = lastNode;
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -88,7 +88,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                     try {
                         Newtime = sdf.parse(((Order) newOrder).getTime());
                         Oldtime = sdf.parse(od.getTime());
-
+                        
                         if (Newtime.after(Oldtime)) {
                             if (firstNode.getNext() != null) {
                                 tempNode.setNext(newOd);
@@ -111,7 +111,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                     Oldtime = sdf.parse(od.getTime());
                                 }
                             }
-
+                            
                             if (tempNode != null) {
                                 (afterNode.getPrevious()).setNext(newOd);
                                 newOd.setNext(afterNode);
@@ -119,7 +119,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 afterNode.setPrevious(newOd);
                                 ck = true;
                                 size++;
-
+                                
                             } else {
                                 firstNode.setPrevious(newOd);
                                 newOd.setNext(firstNode);
@@ -132,16 +132,16 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                     } catch (ParseException ex) {
                         Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    
                 } else {
-
+                    
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     Date NewDate;
                     Date OldDate;
                     SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
                     Date Newtime;
                     Date Oldtime;
-
+                    
                     try {
                         NewDate = sdf.parse(((Order) newOrder).getDate());
                         OldDate = sdf.parse(od.getDate());
@@ -150,11 +150,11 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         if (NewDate.after(OldDate)) {
                             beforeNode = null;
                             afterNode = null;
-
+                            
                             while (tempNode != null && NewDate.after(OldDate)) {
-
+                                
                                 tempNode = tempNode.getNext();
-
+                                
                                 if (tempNode != null) {
                                     od = (Order) tempNode.getData();
                                     OldDate = sdf.parse(od.getDate());
@@ -162,27 +162,27 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                             }
                             
                             if ((Newtime.after(Oldtime)) && NewDate.equals(OldDate)) {
-
+                                
                                 while (tempNode != null && Newtime.after(Oldtime)) {
                                     beforeNode = tempNode;
                                     tempNode = tempNode.getNext();
-
+                                    
                                     if (tempNode != null) {
                                         od = (Order) tempNode.getData();
                                         OldDate = sdf.parse(od.getDate());
                                         Oldtime = sdf2.parse(od.getTime());
                                     }
                                 }
-
+                                
                                 if (tempNode != null) {
-
+                                    
                                     (beforeNode.getNext()).setPrevious(newOd);
                                     newOd.setPrevious(beforeNode);
                                     newOd.setNext(beforeNode.getNext());
                                     beforeNode.setNext(newOd);
                                     ck = true;
                                     size++;
-
+                                    
                                 } else {
                                     lastNode.setNext(newOd);
                                     newOd.setPrevious(lastNode);
@@ -191,9 +191,9 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                     ck = true;
                                     size++;
                                 }
-
+                                
                             } else if ((Newtime.before(Oldtime)) && NewDate.equals(OldDate)) {
-
+                                
                                 beforeNode = tempNode.getPrevious();
                                 beforeNode.setNext(newOd);
                                 newOd.setPrevious(beforeNode);
@@ -201,21 +201,20 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 tempNode.setPrevious(newOd);
                                 ck = true;
                                 size++;
-                            }else{
-                            
-                            if (tempNode == null) {
-                                lastNode.setNext(newOd);
-                                newOd.setPrevious(lastNode);
-                                newOd.setNext(null);
-                                lastNode = newOd;
-                                ck = true;
-                                size++;
-
+                            } else {
+                                
+                                if (tempNode == null) {
+                                    lastNode.setNext(newOd);
+                                    newOd.setPrevious(lastNode);
+                                    newOd.setNext(null);
+                                    lastNode = newOd;
+                                    ck = true;
+                                    size++;
+                                    
+                                }
+                                
                             }
                             
-                            }
-
- 
                         } else if (NewDate.before(OldDate)) {
                             afterNode = null;
                             while (tempNode != null && NewDate.before(OldDate)) {
@@ -226,12 +225,12 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                     OldDate = sdf.parse(od.getDate());
                                 }
                             }
-
+                            
                             if ((Newtime.before(Oldtime)) && NewDate.equals(OldDate)) {
                                 while (tempNode != null && Newtime.before(Oldtime)) {
                                     afterNode = tempNode;
                                     tempNode = tempNode.getPrevious();
-
+                                    
                                     if (tempNode != null) {
                                         od = (Order) tempNode.getData();
                                         OldDate = sdf.parse(od.getDate());
@@ -239,7 +238,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                     }
                                 }
                             }
-
+                            
                             if (tempNode != null) {
                                 (afterNode.getPrevious()).setNext(newOd);
                                 newOd.setNext(afterNode);
@@ -247,7 +246,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 afterNode.setPrevious(newOd);
                                 ck = true;
                                 size++;
-
+                                
                             } else {
                                 firstNode.setPrevious(newOd);
                                 newOd.setNext(firstNode);
@@ -261,28 +260,35 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         ck = false;
                         Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    
                 }
-
+                
             }
             if (ck) {
-
+                
                 if (frequency > lastOdFrequency && frequency >= 5) {
                     if (!newOd.equals(firstNode)) {
                         if (firstNode.getNext() != null) {
                             if (!newOd.equals(lastNode)) {
                                 beforeNode = newOd.getPrevious();
                                 afterNode = newOd.getNext();
-
+                                
                                 if (!beforeNode.equals(firstNode)) {
                                     beforeNode.getPrevious().setNext(newOd);
                                     newOd.setPrevious(beforeNode.getPrevious());
+                                    afterNode.setPrevious(beforeNode);
+                                    beforeNode.setNext(afterNode);
+                                    newOd.setNext(beforeNode);
+                                    beforeNode.setPrevious(newOd);
+                                } else {
+                                    firstNode = newOd;
+                                    afterNode.setPrevious(beforeNode);
+                                    beforeNode.setNext(afterNode);
+                                    newOd.setNext(beforeNode);
+                                    newOd.setPrevious(null);
+                                    beforeNode.setPrevious(newOd);
                                 }
-                                afterNode.setPrevious(beforeNode);
-                                beforeNode.setNext(afterNode);
-                                newOd.setNext(beforeNode);
-                                beforeNode.setPrevious(newOd);
-
+                                
                             } else {
                                 newOd.setNext(lastNode);
                                 lastNode.getPrevious().setNext(newOd);
@@ -293,21 +299,21 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                             newOd.setNext(firstNode);
                             firstNode.setPrevious(newOd);
                             firstNode = newOd;
-
+                            
                         }
                     }
                 }
                 lastOdFrequency = frequency;
             }
         }
-
+        
         return ck;
     }
-
+    
     public int getSize() {
         return size;
     }
-
+    
     public T getOrderRecord(String id) {
         Node tempNode = firstNode;
         T order = null;
@@ -330,7 +336,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         }
         return order;
     }
-
+    
     public int calFoodQuantity(String id) {
         Node tempNode = firstNode;
         int qty = 0;
@@ -345,11 +351,11 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         }
         return qty;
     }
-
+    
     public void resetFrequency() {
         lastOdFrequency = 0;
     }
-
+    
     private boolean addOn(T od) {
         Node tempNode = lastNode;
         boolean sameFood = false;
@@ -361,43 +367,43 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                     ol.setQty(ol.getQty() + ((OrderList) od).getQty());
                     ol.setSubtotal(price * ol.getQty());
                     tempNode.setData(ol);
-
+                    
                     return true;
-
+                    
                 }
                 tempNode = tempNode.getNext();
             }
         }
         return sameFood;
     }
-
+    
     public T getFront() {
         T front = null;
-
+        
         if (!isEmpty()) {
             front = firstNode.getData();
         }
         return front;
     }
-
+    
     public T get() {
         T front = null;
-
+        
         if (!isEmpty()) {
             front = firstNode.getData();
             firstNode = firstNode.getNext();
-
+            
             if (firstNode == null) {
                 lastNode = null;
             }
         }
         return front;
     }
-
+    
     public boolean isEmpty() {
         return (firstNode == null) && (lastNode == null);
     }
-
+    
     public void cancelOrder(String OrderID) {
         Node tempNode;
         if (firstNode != null) {
@@ -405,13 +411,13 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         } else {
             tempNode = firstNode;
         }
-
+        
         while (tempNode != null) {
             OrderList OL = (OrderList) tempNode.getData();
             if (OL.getOrderID().equals(OrderID)) {
                 if (tempNode.getNext() != null) {
                     firstNode = firstNode.getNext();
-
+                    
                 } else {
                     firstNode = null;
                     lastNode = null;
@@ -420,10 +426,10 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             tempNode = tempNode.getNext();
         }
     }
-
+    
     public void displayOrderList(String id) {
         int i = 1;
-
+        
         Node tempNode = firstNode;
         OrderList odList = new OrderList();
         String ol = "===================================================\nNo    Order List\t     　  |\tPrice\n===================================================\n";
@@ -433,14 +439,14 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ol += (i) + ")  " + String.format("%-28s", odList.getQty() + " " + odList.getFoodNm())
                         + " | " + String.format("RM %.2f", odList.getSubtotal()) + "\n";
                 i++;
-
+                
             }
             tempNode = tempNode.getNext();
         }
         ol += "***************************************************\n\tTotal :\t\t\t | " + String.format("RM %.2f", calTotal(odList.getOrderID())) + "\n***************************************************";
         System.out.println(ol);
     }
-
+    
     public Double calTotal(String orderID) {
         double total = 0;
         Node tempNode = firstNode;
@@ -452,10 +458,10 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             }
             tempNode = tempNode.getNext();
         }
-
+        
         return total;
     }
-
+    
     public void displayCurrentQueue() {
         int No = 1;
         if (!isEmpty()) {
@@ -466,15 +472,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         + ORDER.getStatus() + "|Total : RM " + String.format("%.2f", ORDER.getTotal()));
                 No++;
                 tempNode = tempNode.getNext();
-            }
-            System.out.println();
-            tempNode = lastNode;
-            while (tempNode != null) {
-                Order ORDER = (Order) tempNode.getData();
-                System.out.println(No + ". Order ID : " + ORDER.getOrderID() + "|Order Date : " + ORDER.getDate() + "|Order Time : " + ORDER.getTime() + " |Status : "
-                        + ORDER.getStatus() + "|Total : RM " + String.format("%.2f", ORDER.getTotal()));
-                No++;
-                tempNode = tempNode.getPrevious();
+            
             }
         }
     }
