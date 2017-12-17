@@ -34,7 +34,7 @@ public class moduleC {
     FoodDeliveryService FDS = new FoodDeliveryService();
 
     public void menu() {
-        
+
         String choice;
         do {
             System.out.println();
@@ -79,11 +79,11 @@ public class moduleC {
         return id;
     }
 
-    
     public void makeOrder(String CustID) {
 
-        if(customerList.reNewFrequency(order))
+        if (customerList.reNewFrequency(order)) {
             ODqueue.resetFrequency();
+        }
 
         StackInterface<Menu> menuStack = new StackImplementation<>();
         int firstOrder = 1;
@@ -119,7 +119,7 @@ public class moduleC {
                     temp = sc.nextLine();
                 }
                 no2 = Integer.parseInt(temp);
-               
+
                 qty = 0;
 
                 System.out.print("Quantity(1 to 10) >");
@@ -150,7 +150,7 @@ public class moduleC {
 
         String c;
         do {
-            c="";
+            c = "";
             OLqueue.displayOrderList(od.getOrderID());
             System.out.print("(1-Confirm 2-Cancel) >");
             c = sc.nextLine();
@@ -178,8 +178,6 @@ public class moduleC {
 
     }
 
-
-    
     public void viewOrderQueue() {
         if (!ODqueue.isEmpty()) {
             System.out.println("\nOrder Queue\n=======================================================================================================");
@@ -196,8 +194,7 @@ public class moduleC {
         } else {
             FDS.MainMenu();
         }
-        
-        
+
     }
 
     public void retrieveCustomerInfo() {
@@ -209,7 +206,7 @@ public class moduleC {
         do {
             int count = 3;
             do {
-                 
+
                 System.out.print("Enter the customer phone number to retrieve the customer information :");
                 phoneNo = sc.nextLine();
                 cc = customerList.retrieveInstance(phoneNo);
@@ -245,8 +242,5 @@ public class moduleC {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(cal.getTime());
     }
-
-
-
 
 }

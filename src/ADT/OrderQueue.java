@@ -70,7 +70,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             } else {
                 Order od = (Order) tempNode.getData();
                 
-                while (tempNode != null && (((Order) newOrder).getDate()).equals(od.getDate())) {
+                while (tempNode != null && (((Order) newOrder).getDate()).equals(od.getDate())) {   //check whether the queue record all in same date
                     afterNode = tempNode;
                     tempNode = tempNode.getPrevious();
                     
@@ -89,7 +89,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         Newtime = sdf.parse(((Order) newOrder).getTime());
                         Oldtime = sdf.parse(od.getTime());
                         
-                        if (Newtime.after(Oldtime)) {
+                        if (Newtime.after(Oldtime)) {       
                             if (firstNode.getNext() != null) {
                                 tempNode.setNext(newOd);
                                 newOd.setPrevious(tempNode);
@@ -133,7 +133,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                } else {
+                } else {        //there are some record which hv differnt order date with new order
                     
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     Date NewDate;
@@ -147,42 +147,42 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         OldDate = sdf.parse(od.getDate());
                         Newtime = sdf2.parse(((Order) newOrder).getTime());
                         Oldtime = sdf2.parse(od.getTime());
-                        if (NewDate.after(OldDate)) {
+                        if (NewDate.after(OldDate)) {                   
                             beforeNode = null;
                             afterNode = null;
-                            
+
                             while (tempNode != null && NewDate.after(OldDate)) {
-                                
+
                                 tempNode = tempNode.getNext();
-                                
+
                                 if (tempNode != null) {
                                     od = (Order) tempNode.getData();
                                     OldDate = sdf.parse(od.getDate());
                                 }
                             }
-                            
+
                             if ((Newtime.after(Oldtime)) && NewDate.equals(OldDate)) {
-                                
+
                                 while (tempNode != null && Newtime.after(Oldtime)) {
                                     beforeNode = tempNode;
                                     tempNode = tempNode.getNext();
-                                    
+
                                     if (tempNode != null) {
                                         od = (Order) tempNode.getData();
                                         OldDate = sdf.parse(od.getDate());
                                         Oldtime = sdf2.parse(od.getTime());
                                     }
                                 }
-                                
+
                                 if (tempNode != null) {
-                                    
+
                                     (beforeNode.getNext()).setPrevious(newOd);
                                     newOd.setPrevious(beforeNode);
                                     newOd.setNext(beforeNode.getNext());
                                     beforeNode.setNext(newOd);
                                     ck = true;
                                     size++;
-                                    
+
                                 } else {
                                     lastNode.setNext(newOd);
                                     newOd.setPrevious(lastNode);
