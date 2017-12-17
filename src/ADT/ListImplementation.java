@@ -448,10 +448,10 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         int orderFq = 0;
         if (!isEmpty()) {
             Node tempNode = firstNode;
-            while (tempNode != null) {
+            while (tempNode.getNext() != null) {
                      Customer cus = (Customer) tempNode.getData();       
                 if (cus.getCustomerID().equals(CustID)) {
-                    orderFq = (cus.getOrderFrequency()) + 1;
+                    orderFq = cus.getOrderFrequency() + 1;
                     cus.setOrderFrequency(orderFq);
                     break;
                 }
