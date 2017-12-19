@@ -6,12 +6,10 @@
 package client;
 
 import entity.DeliveryMan;
-import ADT.DLinkedQueue;
 import ADT.List;
 import ADT.ListImplementation;
 import ADT.ListInterface;
 import ADT.QuekListInterface;
-import ADT.QueueInterface;
 import entity.Affiliate;
 import entity.Customer;
 import entity.Menu;
@@ -28,22 +26,21 @@ public class FoodDeliveryService {
     /**
      * @param args the command line arguments
      */
-        static ListInterface<Affiliate> affiliateList = new ListImplementation<>();
-        static ListInterface<Menu> menuList = new ListImplementation<>();
-        static ListInterface<Customer> customerList = new ListImplementation<>(); 
-	static QuekListInterface<DeliveryMan> list = new List<>();
-         static ListInterface<Order> order = new ListImplementation<>(); 
-         static ListInterface<OrderList> orderList = new ListImplementation<>(); 
-         Scanner sc=new Scanner(System.in);
-  
-    
+    static ListInterface<Affiliate> affiliateList = new ListImplementation<>();
+    static ListInterface<Menu> menuList = new ListImplementation<>();
+    static ListInterface<Customer> customerList = new ListImplementation<>();
+    static QuekListInterface<DeliveryMan> list = new List<>();
+    static ListInterface<Order> order = new ListImplementation<>();
+    static ListInterface<OrderList> orderList = new ListImplementation<>();
+    Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        FoodDeliveryService FCS=new FoodDeliveryService();
+        FoodDeliveryService FCS = new FoodDeliveryService();
         FCS.hardcode();
         FCS.MainMenu();
-   
+
     }
-    
+
     
     public void hardcode(){
 
@@ -100,18 +97,18 @@ public class FoodDeliveryService {
         order.add(od1); order.add(od2); order.add(od3);
         order.add(od4); order.add(od5); order.add(od6);
         order.add(od7); order.add(od8); order.add(od9); order.add(od10);
-        
-        OrderList odl1 =new OrderList("OL1000","Vege Mee",2,"F0010",12,"OD1000");
-        OrderList odl2 =new OrderList("OL1001","Fried Prawn",1,"F0004",35,"OD1001");
-       OrderList odl3 =new OrderList("OL1005","Lui Cha",2,"F0012",19.8,"OD1002");
-         OrderList odl4 =new OrderList("OL1002","Wasabi Chicken Chop",1,"F0009",12.8,"OD103");
-        OrderList odl5 =new OrderList("OL1002","Cheese Crab",2,"F0005",199.8,"OD1004");
-       OrderList odl6 =new OrderList("OL1003","Sweet and sour tilapia",1,"F0006",28,"OD1005");
-        OrderList odl7 =new OrderList("OL1004","Fish n' Chip",1,"F0007",18.9,"OD1005");
-       OrderList odl8 =new OrderList("OL1007","Lamb Chop",1,"F0008",17.9,"OD1007");
-        OrderList odl9 =new OrderList("OL1006","Durian Burger",3,"F0003",28.5,"OD1006");
-        OrderList odl20 =new OrderList("OL1008","Vege Bak Kut Teh",3,"F0012",36.9,"OD1008");
-         OrderList odl21 =new OrderList("OL1009","Wasabi Chicken Chop",1,"F0009",12.8,"OD109");
+
+        OrderList odl1 = new OrderList("OL1000", "Vege Mee", 2, "F0010", 12, "OD1000");
+        OrderList odl2 = new OrderList("OL1001", "Fried Prawn", 1, "F0004", 35, "OD1001");
+        OrderList odl3 = new OrderList("OL1005", "Lui Cha", 2, "F0012", 19.8, "OD1002");
+        OrderList odl4 = new OrderList("OL1002", "Wasabi Chicken Chop", 1, "F0009", 12.8, "OD103");
+        OrderList odl5 = new OrderList("OL1002", "Cheese Crab", 2, "F0005", 199.8, "OD1004");
+        OrderList odl6 = new OrderList("OL1003", "Sweet and sour tilapia", 1, "F0006", 28, "OD1005");
+        OrderList odl7 = new OrderList("OL1004", "Fish n' Chip", 1, "F0007", 18.9, "OD1005");
+        OrderList odl8 = new OrderList("OL1007", "Lamb Chop", 1, "F0008", 17.9, "OD1007");
+        OrderList odl9 = new OrderList("OL1006", "Durian Burger", 3, "F0003", 28.5, "OD1006");
+        OrderList odl20 = new OrderList("OL1008", "Vege Bak Kut Teh", 3, "F0012", 36.9, "OD1008");
+        OrderList odl21 = new OrderList("OL1009", "Wasabi Chicken Chop", 1, "F0009", 12.8, "OD109");
     
         orderList.add(odl1);  orderList.add(odl2); orderList.add(odl3);
         orderList.add(odl4);  orderList.add(odl5); orderList.add(odl6); 
@@ -124,46 +121,46 @@ public class FoodDeliveryService {
 	list.add(new DeliveryMan("Seong Jian Sheng", "Working", 22, 7, 2000.55, "012-3456789", "Seong Address", "Clock In", 4));
     }
     
-    public void MainMenu(){
-         int no;
-         String choice;
-        Scanner sc=new Scanner(System.in);
-        System.out.println("\n\n1. Maintainance Menus");        
+    public void MainMenu() {
+        int no;
+        String choice;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n\n1. Maintainance Menus");
         System.out.println("2. Maintain Deliveryman Info");
         System.out.println("3. Place ad hoc order ");
         System.out.println("4. Workload assignment and clock in & out");
         System.out.println("0. Exit");
         System.out.print("Enter your choice:");
-        choice=sc.next();
-       while(!choice.matches("[0-4]") || choice.trim().isEmpty()){
-                System.out.print("Please enter an valid number. Enter Your choice: ");
-                choice= sc.next();
-            }
+        choice = sc.next();
+        while (!choice.matches("[0-4]") || choice.trim().isEmpty()) {
+            System.out.print("Please enter an valid number. Enter Your choice: ");
+            choice = sc.next();
+        }
         no = Integer.parseInt(choice);
 
-       do{        
-          switch(no){
-            case 1:
-                System.out.println();   
-                ModuleA a=new ModuleA();
-                a.menu();
-                break;
-            case 2:
-                System.out.println();   
-                moduleB b=new moduleB();
-                break;
-            case 3:
-                moduleC c=new moduleC();
-                break;
-            case 4:
-                break; 
-            case 0:
-                System.out.print("Bye.Have a nice day.");
-                break;
-            default:
-                System.out.print("Invalid choice.Please Try again:"); 
-        }
-       }while(no<0||no>4);        
-        
+        do {
+            switch (no) {
+                case 1:
+                    System.out.println();
+                    ModuleA a = new ModuleA();
+                    a.menu();
+                    break;
+                case 2:
+                    System.out.println();
+                    moduleB b = new moduleB();
+                    break;
+                case 3:
+                    moduleC c = new moduleC();
+                    break;
+                case 4:
+                    break;
+                case 0:
+                    System.out.print("Bye.Have a nice day.");
+                    break;
+                default:
+                    System.out.print("Invalid choice.Please Try again:");
+            }
+        } while (no < 0 || no > 4);
+
     }
 }
