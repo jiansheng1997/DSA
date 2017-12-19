@@ -32,36 +32,35 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
   } 
 
   
-    public boolean add(T newOrder) {
-      Node newOd = new Node(newOrder);
+    public boolean add(T newEntry) {
+      Node newOd = new Node(newEntry);
     boolean ck=false;
     Node tempNode=lastNode; 
-        if(newOrder instanceof OrderList){
+        if(newEntry instanceof OrderList){
        
        if (isEmpty()) {
           firstNode = newOd;
           lastNode=newOd;
           ck=true;
          } else {
-     if(!foundSame(newOrder)){
-
+     if(!foundSame(newEntry)){
       tempNode.setNext(newOd);
       newOd.setPrevious(tempNode);
       lastNode=newOd;
-     }
+          }
        ck=true;
       }
     
     }
         return ck;
-    }
+  }
   
   
-    public boolean add(T newOrder,int frequency) {
-    Node newOd = new Node(newOrder);
+    public boolean add(T newEntry,int frequency) {
+    Node newOd = new Node(newEntry);
     boolean ck=false;
     Node tempNode=lastNode; 
-    if (newOrder instanceof Order){
+    if (newEntry instanceof Order){
          if (isEmpty()) {
            newOd.setPrevious(null);
           firstNode = newOd;
@@ -71,7 +70,7 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
           ck=true;
          } else {
         Order od=(Order) tempNode.getData();
-      if ((((Order) newOrder).getDate()).equals(od.getDate())){
+      if ((((Order) newEntry).getDate()).equals(od.getDate())){
           if(frequency>lastOdFrequency && frequency>=5) {
               if(firstNode.getNext()!=null){
               newOd.setPrevious(lastNode.getPrevious());
@@ -90,7 +89,7 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
            Date Newtime;
            Date Oldtime; 
           try {
-              Newtime=sdf.parse(((Order) newOrder).getTime());
+              Newtime=sdf.parse(((Order) newEntry).getTime());
               Oldtime=sdf.parse(od.getTime());
           if(Newtime.after(Oldtime)){
             if(firstNode.getNext()!=null){
@@ -129,7 +128,7 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
            Date OldDate;
      
           try {
-              NewDate=sdf.parse(((Order) newOrder).getDate());
+              NewDate=sdf.parse(((Order) newEntry).getDate());
               OldDate=sdf.parse(od.getDate());
           if(NewDate.after(OldDate)){
                 tempNode.setNext(newOd);
