@@ -215,15 +215,17 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
                 }
                 tempNode = tempNode.getNext();
             }
-        }else if (!isEmpty() && tempNode.getData() instanceof Customer) {
-    while(tempNode!=null){
-    Customer cus =(Customer)tempNode.getData();       //retrieve cus info based on phone number  
-        if(cus.getPhoneNumber().equals(info))
-            result=(T)cus;   
-        else if(info.equals(cus.getCustomerID()))   //retrieve cus info based on cusID 
-            result=(T)cus;
-            tempNode=tempNode.getNext();
-    }
+        } else if (!isEmpty() && tempNode.getData() instanceof Customer) {
+            while (tempNode != null) {
+                Customer cus = (Customer) tempNode.getData();       //retrieve cus info based on phone number  
+                if (cus.getPhoneNumber().equals(info)) {
+                    result = (T) cus;
+                } else if (info.equals(cus.getCustomerID())) //retrieve cus info based on cusID 
+                {
+                    result = (T) cus;
+                }
+                tempNode = tempNode.getNext();
+            }
         }
         return result;
     }//Retrieve a record from the list. Return a record if it matches the id entered, else return false.
@@ -446,9 +448,9 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         int orderFq = 0;
         if (!isEmpty()) {
             Node tempNode = firstNode;
-            Customer cus = (Customer) tempNode.getData();
             while (tempNode.getNext() != null) {
-                if (CustID.equals(cus.getCustomerID())) {
+                     Customer cus = (Customer) tempNode.getData();       
+                if (cus.getCustomerID().equals(CustID)) {
                     orderFq = cus.getOrderFrequency() + 1;
                     cus.setOrderFrequency(orderFq);
                     break;

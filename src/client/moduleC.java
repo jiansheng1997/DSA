@@ -187,13 +187,21 @@ public class moduleC {
             System.out.println("\nThere are no queue.");
         }
         ODqueue.displayCurrentQueue();
+        
+                  for (int i = 1 ; i <= customerList.getNumberOfEntries() ; i++){
+                System.out.println(customerList.get(i).toString());
+               
+                }
         System.out.print("\nBack to Menu?(Menu-1 ,Please any key to exit)");
         String temp = sc.nextLine();
+
         if (temp.equals("1")) {
             menu();
         } else {
             FDS.MainMenu();
         }
+        
+        
     }
 
     public void retrieveCustomerInfo() {
