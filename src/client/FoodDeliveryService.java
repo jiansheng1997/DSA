@@ -5,9 +5,12 @@
  */
 package client;
 
+import entity.DeliveryMan;
 import ADT.DLinkedQueue;
+import ADT.List;
 import ADT.ListImplementation;
 import ADT.ListInterface;
+import ADT.QuekListInterface;
 import ADT.QueueInterface;
 import entity.Affiliate;
 import entity.Customer;
@@ -28,7 +31,7 @@ public class FoodDeliveryService {
         static ListInterface<Affiliate> affiliateList = new ListImplementation<>();
         static ListInterface<Menu> menuList = new ListImplementation<>();
         static ListInterface<Customer> customerList = new ListImplementation<>(); 
-
+	static QuekListInterface<DeliveryMan> list = new List<>();
          static ListInterface<Order> order = new ListImplementation<>(); 
          static ListInterface<OrderList> orderList = new ListImplementation<>(); 
          Scanner sc=new Scanner(System.in);
@@ -41,8 +44,6 @@ public class FoodDeliveryService {
    
     }
     
-    
-
     
     public void hardcode(){
 
@@ -96,8 +97,6 @@ public class FoodDeliveryService {
         Order od9 =new Order("OD1008","C0004","15/12/2017","16:21:22","Delivered",36.9);
         Order od10 =new Order("OD1009","C0001","17/12/2017","05:46:56","Delivered",12.8);
 
-
-
         order.add(od1); order.add(od2); order.add(od3);
         order.add(od4); order.add(od5); order.add(od6);
         order.add(od7); order.add(od8); order.add(od9); order.add(od10);
@@ -113,12 +112,16 @@ public class FoodDeliveryService {
         OrderList odl9 =new OrderList("OL1006","Durian Burger",3,"F0003",28.5,"OD1006");
         OrderList odl20 =new OrderList("OL1008","Vege Bak Kut Teh",3,"F0012",36.9,"OD1008");
          OrderList odl21 =new OrderList("OL1009","Wasabi Chicken Chop",1,"F0009",12.8,"OD109");
-
     
         orderList.add(odl1);  orderList.add(odl2); orderList.add(odl3);
         orderList.add(odl4);  orderList.add(odl5); orderList.add(odl6); 
         orderList.add(odl7);  orderList.add(odl8); orderList.add(odl9);
         orderList.add(odl20);     orderList.add(odl21);
+        
+        list.add(new DeliveryMan("Quek Wei Jian   ", "Working", 20, 5, 3000.55, "012-3456789", "Quek Address", "Clock Out", 1));
+	list.add(new DeliveryMan("Phuah Wai Yan   ", "Working", 18, 3, 4500.99, "012-9876543", "Phuah Address", "Clock In", 2));
+	list.add(new DeliveryMan("Ng Yih Sam      ", "Retire", 25, 15, 7600.30, "012-9786543", "Sam Address", "Clock Out", 3));
+	list.add(new DeliveryMan("Seong Jian Sheng", "Working", 22, 7, 2000.55, "012-3456789", "Seong Address", "Clock In", 4));
     }
     
     public void MainMenu(){
@@ -141,10 +144,13 @@ public class FoodDeliveryService {
        do{        
           switch(no){
             case 1:
+                System.out.println();   
                 ModuleA a=new ModuleA();
                 a.menu();
                 break;
             case 2:
+                System.out.println();   
+                moduleB b=new moduleB();
                 break;
             case 3:
                 moduleC c=new moduleC();
