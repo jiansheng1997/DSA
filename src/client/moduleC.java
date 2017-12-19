@@ -182,7 +182,7 @@ public class moduleC {
     
     public void viewOrderQueue() {
         if (!ODqueue.isEmpty()) {
-            System.out.println("\nOrder Queue\n============================================================================");
+            System.out.println("\nOrder Queue\n=======================================================================================================");
         } else {
             System.out.println("\nThere are no queue.");
         }

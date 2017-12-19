@@ -71,7 +71,7 @@ public class FoodDeliveryService {
         menuList.add(vayne1); menuList.add(vayne2); menuList.add(vayne3);
         menuList.add(seong1); menuList.add(seong2); menuList.add(seong3);
    
-        Customer c1 = new Customer("C0001","abc123", "Michelle Lee", "0133344334", "No.34, Jalan 2, Taman Segamat, Selangor", "michelleLee@gmail.com", 5);
+        Customer c1 = new Customer("C0001","abc123", "Michelle Lee", "0127654479", "No.34, Jalan 2, Taman Segamat, Selangor", "michelleLee@gmail.com", 5);
         Customer c2 = new Customer("C0002","4896", "Soon Jian Kai", "0129709876", "No.55, Jalan 1/2, Taman Wilayah, Selangor", "soonjk@gmail.com", 2);
         Customer c3 = new Customer("C0003", "233","Ashlyn Chong", "0193456789", "No.11, Jalan 1, Blok H, Taman Ceasar, Selangor", "ashlyn@gmail.com", 1);
         Customer c4 = new Customer("C0004","idk", "Michael Chia", "0122234479", "No.99, Bangunan Tan Siew Sin, Setapak, Selangor", "michaelChia@gmail.com", 1);

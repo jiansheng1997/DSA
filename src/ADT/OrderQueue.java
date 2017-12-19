@@ -57,7 +57,6 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         Node newOd = new Node(newOrder);
         boolean ck = false;
         Node tempNode = lastNode;
-        String m = "";
         if (newOrder instanceof Order) {
             if (isEmpty()) {
                 newOd.setPrevious(null);
@@ -67,24 +66,8 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ck = true;
                 size++;
             } else {
-                Order od = (Order) tempNode.getData();
+                Order od = (Order) firstNode.getData();
                 if ((((Order) newOrder).getDate()).equals(od.getDate())) {
-                    if (frequency > lastOdFrequency && frequency >= 5) {
-                        if (firstNode.getNext() != null) {
-                            newOd.setNext(lastNode);
-                            lastNode.getPrevious().setNext(newOd);
-                            newOd.setPrevious(lastNode.getPrevious());
-                            lastNode.setPrevious(newOd);
-                            ck = true;
-                            size++;
-                        } else {
-                            newOd.setNext(firstNode);
-                            firstNode.setPrevious(newOd);
-                            firstNode = newOd;
-                            ck = true;
-                            size++;
-                        }
-                    } else {
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
                         Date Newtime;
                         Date Oldtime;
@@ -125,24 +108,21 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                         afterNode.setPrevious(newOd);
                                         ck = true;
                                         size++;
-                                        m += "w";
+                           
                                    }else{
-                                        m += "a"; 
-                                        firstNode.setPrevious(newOd);
+                                       firstNode.setPrevious(newOd);
                                         newOd.setNext(firstNode);
                                         newOd.setPrevious(null);
                                         firstNode = newOd;
                                         ck = true;
                                         size++;
                                    }
-
-                              System.out.print(m);
                             }
                         } catch (ParseException ex) {
                             Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                    }
+                    
                 } else {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     Date NewDate;
@@ -158,22 +138,61 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                             ck = true;
                             size++;
                         } else if (NewDate.before(OldDate)) {
-                            if (tempNode.getPrevious() != null) {
-                                newOd.setPrevious(tempNode.getPrevious());
-                                tempNode.getPrevious().setNext(newOd);
-                            }
-                            newOd.setNext(tempNode);
-                            tempNode.setPrevious(newOd);
-                            firstNode = newOd;
-                            ck = true;
-                            size++;
+                               Node afterNode=null;
+                                while (tempNode != null && NewDate.before(OldDate)) {
+                                 afterNode=tempNode;
+                                    tempNode =tempNode.getPrevious();
+;   
+                                    if (tempNode != null) {
+                                        od = (Order) tempNode.getData();
+                                        OldDate = sdf.parse(od.getDate());
+                                     }
+                                }
+         
+                                   if(tempNode!=null){
+                                        (afterNode.getPrevious()).setNext(newOd);         
+                                        newOd.setNext(afterNode);
+                                        newOd.setPrevious(afterNode.getPrevious());
+                                        afterNode.setPrevious(newOd);
+                                        ck = true;
+                                        size++;
+                           
+                                   }else{
+                                       firstNode.setPrevious(newOd);
+                                        newOd.setNext(firstNode);
+                                        newOd.setPrevious(null);
+                                        firstNode = newOd;
+                                        ck = true;
+                                        size++;
+                                   }
                         }
                     } catch (ParseException ex) {
                         ck = false;
                         Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                if (frequency > lastOdFrequency && frequency >= 5) {
+                    if (!newOd.equals(firstNode)) {
+                        if (firstNode.getNext() != null) {
+                            if (!newOd.equals(lastNode)) {
+                                newOd.getPrevious().setNext(newOd.getNext());
+                                newOd.setNext(newOd.getPrevious());
+                                newOd.setPrevious( newOd.getPrevious().getPrevious());                                
+                                newOd.getPrevious().setPrevious(newOd);
+                            }else{
+                            newOd.setNext(lastNode);
+                            lastNode.getPrevious().setNext(newOd);
+                            newOd.setPrevious(lastNode.getPrevious());
+                            lastNode.setPrevious(newOd);  
+                            }
+                        } else {
+                            newOd.setNext(firstNode);
+                            firstNode.setPrevious(newOd);
+                            firstNode = newOd;
 
+                        }
+                    }
+                }
             }
 
         }
@@ -184,9 +203,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         return ck;
     }
 
-    public void compareTime(T order,Node currentNode) {
 
-    }
 
     public int getSize() {
         return size;
