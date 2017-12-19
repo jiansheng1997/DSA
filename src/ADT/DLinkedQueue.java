@@ -38,21 +38,20 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
     Node tempNode=lastNode; 
         if(newEntry instanceof OrderList){
        
-       if (isEmpty()) {
-          firstNode = newOd;
-          lastNode=newOd;
-          ck=true;
-         } else {
-     if(!foundSame(newEntry)){
-      tempNode.setNext(newOd);
-      newOd.setPrevious(tempNode);
-      lastNode=newOd;
-          }
-       ck=true;
-      }
-    
-    }
-        return ck;
+            if (isEmpty()) {
+                firstNode = newOd;
+                lastNode=newOd;
+                ck=true;
+            } else {
+            if(!foundSame(newEntry)){
+                tempNode.setNext(newOd);
+                newOd.setPrevious(tempNode);
+                lastNode=newOd;
+            }
+            ck=true;
+         }     
+     }
+      return ck;
   }
   
   
@@ -60,66 +59,62 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
     Node newOd = new Node(newEntry);
     boolean ck=false;
     Node tempNode=lastNode; 
-    if (newEntry instanceof Order){
-         if (isEmpty()) {
-           newOd.setPrevious(null);
-          firstNode = newOd;
-          firstNode.setNext(null);
-          lastNode=newOd;
-          lastOdFrequency=frequency;
-          ck=true;
+        if (newEntry instanceof Order){
+             if (isEmpty()) {
+            newOd.setPrevious(null);
+            firstNode = newOd;
+            firstNode.setNext(null);
+            lastNode=newOd;
+            lastOdFrequency=frequency;
+            ck=true;
          } else {
-        Order od=(Order) tempNode.getData();
-      if ((((Order) newEntry).getDate()).equals(od.getDate())){
-          if(frequency>lastOdFrequency && frequency>=5) {
-              if(firstNode.getNext()!=null){
-              newOd.setPrevious(lastNode.getPrevious());
-              newOd.setNext(lastNode);
-              lastNode.setPrevious(newOd);
-              ck=true;
+            Order od=(Order) tempNode.getData();
+        if ((((Order) newEntry).getDate()).equals(od.getDate())){
+             if(frequency>lastOdFrequency && frequency>=5) {
+                  if(firstNode.getNext()!=null){
+                    newOd.setPrevious(lastNode.getPrevious());
+                    newOd.setNext(lastNode);
+                    lastNode.setPrevious(newOd);
+                    ck=true;
               }else{
-              firstNode=newOd;
-              firstNode.setNext(lastNode);
-              lastNode.setPrevious(firstNode);
-              ck=true;
+                firstNode=newOd;
+                firstNode.setNext(lastNode);
+                lastNode.setPrevious(firstNode);
+                ck=true;
               }  
-          }else{
-          
-          SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-           Date Newtime;
-           Date Oldtime; 
+          }else{         
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            Date Newtime;
+            Date Oldtime; 
           try {
               Newtime=sdf.parse(((Order) newEntry).getTime());
               Oldtime=sdf.parse(od.getTime());
-          if(Newtime.after(Oldtime)){
-            if(firstNode.getNext()!=null){
-                lastNode.setNext(newOd);
-                newOd.setPrevious(lastNode);
-                ck=true; 
+            if(Newtime.after(Oldtime)){
+                if(firstNode.getNext()!=null){
+                    lastNode.setNext(newOd);
+                    newOd.setPrevious(lastNode);
+                    ck=true; 
               }else{
                  firstNode.setNext(newOd);
                  newOd.setPrevious(firstNode);
-                  ck=true;     
+                 ck=true;     
               }
-                lastNode=newOd;  
+                 lastNode=newOd;  
           }else if(Newtime.before(Oldtime)){
               if(firstNode.getNext()!=null){
-              newOd.setPrevious(lastNode.getPrevious());
-              newOd.setNext(lastNode);
-              lastNode.setPrevious(newOd);
-              ck=true;
+                newOd.setPrevious(lastNode.getPrevious());
+                newOd.setNext(lastNode);
+                lastNode.setPrevious(newOd);
+                ck=true;
               }else{
-              firstNode=newOd;
-              firstNode.setNext(lastNode);
-              lastNode.setPrevious(firstNode);
-              ck=true;
+                firstNode=newOd;
+                firstNode.setNext(lastNode);
+                lastNode.setPrevious(firstNode);
+                ck=true;
               }  
-             
-          }
-                    
-          } catch (ParseException ex) {
-              Logger.getLogger(DLinkedQueue.class.getName()).log(Level.SEVERE, null, ex);
-             
+            }           
+            } catch (ParseException ex) {
+              Logger.getLogger(DLinkedQueue.class.getName()).log(Level.SEVERE, null, ex); 
               } 
           }
       }else{
@@ -151,15 +146,12 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
           }         
       }
       
-    }
-         
+    }   
     }
     return ck;
   }
     
-   
-    
- 
+
     public T getOrderRecord(String id){
         Node tempNode = firstNode;
        T order=null;
@@ -179,7 +171,6 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
                 }  
                 tempNode = tempNode.getNext();  
         }
-        
         }
    return order;
     }
@@ -232,7 +223,6 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
     if (!isEmpty()) {
       front = firstNode.getData();
     }
-
     return front;
   } 
 
@@ -287,9 +277,6 @@ public class DLinkedQueue<T> implements QueueInterface<T>{
   } 
 
 
- 
-   
-    
   public void displayOrderList(String id){
             int i=1;
 
