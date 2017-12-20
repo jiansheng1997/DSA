@@ -59,7 +59,7 @@ public class moduleB {
 					deliveryMan.setTaskStatus("Clock Out");
 					deliveryMan.setExperience(0);
 					deliveryMan.setDistanceTravel(0);
-					deliveryMan.setId("DM" + list.size()+1);
+					deliveryMan.setId("DM" + (list.size()+1));
 					list.add(deliveryMan);
 
 					System.out.print("Do you wish to continue to add staff member? (Y/N)");
