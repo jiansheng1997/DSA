@@ -44,12 +44,14 @@ public class List<T> implements QuekListInterface<T> {
 	public void set(int position, Object newEntry) {
 		Node myNode = firstNode;
 
-		for (int i = 1; i < position; i++) {
-			myNode.setNext(myNode.getNext());
+		for (int i = 0; i < position; i++) {
+			myNode = myNode.getNext();
+			
 		}
 
 		myNode.setData(newEntry);
-
+		
+		
 	}
 
 	public T remove(int position) {
