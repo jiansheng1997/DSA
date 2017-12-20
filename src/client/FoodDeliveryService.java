@@ -115,10 +115,10 @@ public class FoodDeliveryService {
         orderList.add(odl7);  orderList.add(odl8); orderList.add(odl9);
         orderList.add(odl20);     orderList.add(odl21);
         
-        list.add(new DeliveryMan("Quek Wei Jian   ", "Working", 20, 5, 3000.55, "012-3456789", "Quek Address", "Clock Out", 1));
-	list.add(new DeliveryMan("Phuah Wai Yan   ", "Working", 18, 3, 4500.99, "012-9876543", "Phuah Address", "Clock In", 2));
-	list.add(new DeliveryMan("Ng Yih Sam      ", "Retire", 25, 15, 7600.30, "012-9786543", "Sam Address", "Clock Out", 3));
-	list.add(new DeliveryMan("Seong Jian Sheng", "Working", 22, 7, 2000.55, "012-3456789", "Seong Address", "Clock In", 4));
+        list.add(new DeliveryMan("DM"+1, "Quek Wei Jian   ", "Working", 20, 5, 3000.55, "012-3456789", "Quek Address", "Clock Out", 1, 10));
+	list.add(new DeliveryMan("DM"+2, "Phuah Wai Yan   ", "Working", 18, 3, 4500.99, "012-9876543", "Phuah Address", "Clock In", 2, 20));
+	list.add(new DeliveryMan("DM"+3, "Ng Yih Sam      ", "Retire", 25, 15, 7600.30, "012-9786543", "Sam Address", "Clock Out", 3, 30));
+	list.add(new DeliveryMan("DM"+4, "Seong Jian Sheng", "Working", 22, 7, 2000.55, "012-3456789", "Seong Address", "Clock In", 4, 40));
     }
     
     public void MainMenu() {

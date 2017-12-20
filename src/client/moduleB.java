@@ -59,6 +59,7 @@ public class moduleB {
 					deliveryMan.setTaskStatus("Clock Out");
 					deliveryMan.setExperience(0);
 					deliveryMan.setDistanceTravel(0);
+					deliveryMan.setId("DM" + list.size()+1);
 					list.add(deliveryMan);
 
 					System.out.print("Do you wish to continue to add staff member? (Y/N)");
@@ -69,12 +70,12 @@ public class moduleB {
 			} else if (answer == 2) {
 
 				spacing();
-				if (new moduleB().toString().isEmpty()) {
+				if (deliveryManList().isEmpty()) {
 					System.out.println("No Delivery Man In Database");
 				} else {
 					System.out.println("Delivery Man List: ");
 				}
-				System.out.println(new moduleB().toString());
+				System.out.println(deliveryManList());
 			} else if (answer == 3) {
 				spacing();
 				for (int i = 0; i < list.size(); i++) {
@@ -210,7 +211,7 @@ public class moduleB {
 
 	}
 
-	public String toString() {
+	public static String deliveryManList() {
 		String deliveryList = "";
 		System.out.println("The size is " + list.size());
 		for (int i = 0; i < list.size(); i++) {

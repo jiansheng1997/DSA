@@ -23,6 +23,7 @@ public class DeliveryMan {
 	private int experience;
 	
 	private double distanceTravel;
+	private String id;
 
 	public double getDistanceTravel() {
 		return distanceTravel;
@@ -51,30 +52,8 @@ public class DeliveryMan {
 	public DeliveryMan() {
 		
 	}
-	
-	public DeliveryMan(String name, String status, int age, int numberOfDelivery, double salary, String phoneNumber, String address) {
-		this.name = name;
-		this.status = status;
-		this.age = age;
-		this.numberOfDelivery = numberOfDelivery;
-		this.salary = salary;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-	}
-	
-	public DeliveryMan(String name, String status, int age, int numberOfDelivery, double salary, String phoneNumber, String address, String taskStatus, int experience) {
-		this.name = name;
-		this.status = status;
-		this.age = age;
-		this.numberOfDelivery = numberOfDelivery;
-		this.salary = salary;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.taskStatus = taskStatus;
-		this.experience = experience;
-	}
-	
-	public DeliveryMan(String name, String status, int age, int numberOfDelivery, double salary, String phoneNumber, String address, String taskStatus, int experience, double distanceTravel) {
+	public DeliveryMan(String id,String name, String status, int age, int numberOfDelivery, double salary, String phoneNumber, String address, String taskStatus, int experience, double distanceTravel) {
+		this.id = id;
 		this.name = name;
 		this.status = status;
 		this.age = age;
@@ -85,6 +64,14 @@ public class DeliveryMan {
 		this.taskStatus = taskStatus;
 		this.experience = experience;
 		this.distanceTravel = distanceTravel;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public String getAddress() {
@@ -144,7 +131,8 @@ public class DeliveryMan {
 	}
 	
 	public String toString() {
-		return    "Name            : " + name + "\n" 
+		return    "Id              : " + id + "\n"
+				+ "Name            : " + name + "\n" 
 				+ "Status          : " + status + "\n" 
 				+ "Age             : " + age + "\n" 
 				+ "Delivery Number : " + numberOfDelivery + "\n" 
