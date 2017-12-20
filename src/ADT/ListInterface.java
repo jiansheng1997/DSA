@@ -40,13 +40,15 @@ public interface ListInterface<T> {
     
     public double MostExpensiveValue();
     
-    public boolean Login(String id,String pass);
+    public boolean Login(String id, String pass);
 
-     public void cancelOrder(String OrderID);
-     
-     public String generateID(T id);
-     
-    public T getlatestOrder(); 
+    public void cancelOrder(String OrderID);
 
+    public String generateID(T id);
 
+    public T getlatestOrder();
+
+    public int addOrderFrequency(String id);
+
+    public void reNewFrequency(QueueInterface order);
 }

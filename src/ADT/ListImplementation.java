@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class ListImplementation<T> implements ListInterface<T>{
 
     Node firstNode;
@@ -292,16 +293,16 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         }while(findSame(randNum));
         return result;
     }
-    
+
     @Override
-    public T CheapestFood(){
+    public T CheapestFood() {
         T result = null;
         Node tempNode = firstNode;
-        if(!isEmpty() && tempNode.getData() instanceof Menu){
-            Menu first = (Menu)tempNode.getData();
+        if (!isEmpty() && tempNode.getData() instanceof Menu) {
+            Menu first = (Menu) tempNode.getData();
             double smallest = first.getPrice();
             for (int i = 1; i <= totalEntries; i++) {
-                Menu menu = (Menu)tempNode.getData();
+                Menu menu = (Menu) tempNode.getData();
                 if (menu.getPrice() < smallest) {
                     result = (T) menu;
                 }
@@ -310,9 +311,9 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         }
         return result;
     }                                     //Find the cheapest food from the menu and return the record. Return the record with cheapest price.
-    
+
     @Override
-    public double MostExpensiveValue(){
+    public double MostExpensiveValue() {
         double biggest = 0;
         Node tempNode = firstNode;
         if (!isEmpty() && tempNode.getData() instanceof Menu) {
@@ -326,79 +327,78 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         }
         return biggest;
     }                         //Find the most expensive price from the menu. Return a double value.
-  
- 
-  public void cancelOrder(String OrderID){
-      Node tempNode;
-      if(firstNode!=null){
-          tempNode=firstNode;
-      while(tempNode!=null){
-          OrderList OL=(OrderList) tempNode.getData();
-          if(OL.getOrderID().equals(OrderID)){
-              if(tempNode.getNext()!=null){
-              firstNode=firstNode.getNext();
-              
-              }else{
-              firstNode=null;
-              }
-           }
-          tempNode=tempNode.getNext();
-      }
-  }
-  }
-     
-     public String generateID(T id){   
-        String no="";
-        int num;
-        Node tempNode=firstNode;  
-            while(tempNode.getNext() != null)
-                tempNode = tempNode.getNext();
-        
-  
-   if (id instanceof OrderList) { 
-      OrderList ol=new OrderList();      
-   if(firstNode!=null){
-        ol=(OrderList)tempNode.getData();
-        for(int i=2;i<=5;i++){
-            no+=ol.getOrderListID().charAt(i); 
+
+    public void cancelOrder(String OrderID) {
+        Node tempNode;
+        if (firstNode != null) {
+            tempNode = firstNode;
+            while (tempNode != null) {
+                OrderList OL = (OrderList) tempNode.getData();
+                if (OL.getOrderID().equals(OrderID)) {
+                    if (tempNode.getNext() != null) {
+                        firstNode = firstNode.getNext();
+
+                    } else {
+                        firstNode = null;
+                    }
                 }
-        num=Integer.parseInt(no)+1;   
-        no="OL"+num;  
+                tempNode = tempNode.getNext();
+            }
+        }
+    }
+
+    public String generateID(T id) {
+        String no = "";
+        int num;
+        Node tempNode = firstNode;
+        while (tempNode.getNext() != null) {
+            tempNode = tempNode.getNext();
+        }
+
+        if (id instanceof OrderList) {
+            OrderList ol = new OrderList();
+            if (firstNode != null) {
+                ol = (OrderList) tempNode.getData();
+                for (int i = 2; i <= 5; i++) {
+                    no += ol.getOrderListID().charAt(i);
+                }
+                num = Integer.parseInt(no) + 1;
+                no = "OL" + num;
+
+                return no;
+            } else {
+                no = "OL1000";
+            }
+        } else if (id instanceof Order) {
+            Order od = new Order();
+
+            if (firstNode != null) {
+                od = (Order) tempNode.getData();
+                for (int i = 2; i <= 5; i++) {
+                    no += od.getOrderID().charAt(i);
+                }
+                num = Integer.parseInt(no) + 1;
+                no = "OD" + num;
+                return no;
+            } else {
+                no = "OD1000";
+            }
+        }
 
         return no;
-    }else
-         no="OL1000";
-        }
-   
-   else if (id instanceof Order) { 
-      Order od=new Order();
-      
-   if(firstNode!=null){
-        od=(Order)tempNode.getData();
-        for(int i=2;i<=5;i++){
-            no+=od.getOrderID().charAt(i); 
-                }
-        num=Integer.parseInt(no)+1;   
-        no="OD"+num;  
-        return no;
-    }else
-         no="OD1000";
-   }
-   
-   return no;
     }
-  
-    public T getlatestOrder(){
+
+    public T getlatestOrder() {
         T result = null;
         Node tempNode = firstNode;
-        if(!isEmpty() && tempNode.getData() instanceof Order){
+        if (!isEmpty() && tempNode.getData() instanceof Order) {
             try {
-                Order firstOd = (Order)tempNode.getData();
+                Order firstOd = (Order) tempNode.getData();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date latestOdDate = sdf.parse(firstOd.getDate());
-                
-            for (int i = 1; i <= totalEntries; i++) {
-                    Order od = (Order)tempNode.getData();
+
+                for (int i = 1; i <= totalEntries; i++) {
+                    Order od = (Order) tempNode.getData();
                     Date OdDate = sdf.parse(od.getDate());
                     if (latestOdDate.before(OdDate)) {
                         result = (T) od;
@@ -410,7 +410,50 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
             }
         }
         return result;
-    }   
-  
-  
+    }
+
+    public void reNewFrequency(QueueInterface order) {
+
+        try {
+            boolean find = false;
+            Calendar cal = Calendar.getInstance();
+            int month = cal.get(Calendar.MONTH);
+            month++;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date OdDate = sdf.parse(((Order) getlatestOrder()).getDate());
+            if (cal.getTime().after(OdDate)) {
+                if (!isEmpty()) {
+                    Node tempNode = firstNode;
+                    while (tempNode.getNext() != null) {
+                        if (OdDate.getMonth() + 1 != month) {
+                            ((Customer) tempNode.getData()).setOrderFrequency(0);
+                            order.resetFrequency();
+                            find = true;
+                        }
+                        tempNode = tempNode.getNext();
+                    }
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(ListImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public int addOrderFrequency(String id) {
+        int orderFq = 0;
+        if (!isEmpty()) {
+            Node tempNode = firstNode;
+            Customer cus = (Customer) tempNode.getData();
+            while (tempNode.getNext() != null) {
+                if (id.equals(tempNode.getData())) {
+                    orderFq = cus.getOrderFrequency() + 1;
+                    cus.setOrderFrequency(orderFq);
+                    break;
+                }
+                tempNode = tempNode.getNext();
+            }
+        }
+        return orderFq;
+    }
 }

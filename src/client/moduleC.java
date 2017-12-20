@@ -84,7 +84,7 @@ public class moduleC {
 
     public void makeOrder(String CustID) {
 
-        reNewFrequency();
+        customerList.reNewFrequency(ODqueue);
 
         StackInterface<Menu> menuStack = new StackImplementation<>();
         int firstOrder = 1;
@@ -165,7 +165,7 @@ public class moduleC {
                 if (ODqueue.add(od, fq) && order.add(od)) {
                     System.out.println("Your order is now pending to delivery.");
                     System.out.println(od.toString());
-                    fq = addOrderFrequency(CustID);
+                    fq = customerList.addOrderFrequency(CustID);
                 }
                 menu();
             } else if (c.equals("2")) {
@@ -244,38 +244,7 @@ public class moduleC {
         return sdf.format(cal.getTime());
     }
 
-    public int addOrderFrequency(String id) {
-        int orderFq = 0;
-        for (int i = 1; i < customerList.getNumberOfEntries(); i++) {
-            if (id.equals(customerList.get(i).getCustomerID())) {
-                orderFq = customerList.get(i).getOrderFrequency() + 1;
-                customerList.get(i).setOrderFrequency(orderFq);
-                break;
-            }
-        }
-        return orderFq;
-    }
 
-    public void reNewFrequency() {
-        try {
-            boolean find = false;
-            Calendar cal = Calendar.getInstance();
-            int month = cal.get(Calendar.MONTH);
-            month++;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date OdDate = sdf.parse(order.getlatestOrder().getDate());
-            if (cal.getTime().after(OdDate)) {
-                for (int k = 1; k < customerList.getNumberOfEntries(); k++) {
-                    if (OdDate.getMonth() + 1 != month) {
-                        customerList.get(k).setOrderFrequency(0);
-                        ODqueue.resetFrequency();
-                        find = true;
 
-                    }
-                }
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(moduleC.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
 }
