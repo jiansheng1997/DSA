@@ -34,7 +34,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         Node newOd = new Node(newOrder);
         boolean ck = false;
         Node tempNode = lastNode;
-        if (newOrder instanceof OrderList) {
+
 
             if (isEmpty()) {
                 firstNode = newOd;
@@ -42,7 +42,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ck = true;
                 size++;
             } else {
-                if (!foundSame(newOrder)) {
+                if (!addOn(newOrder)) {
                     tempNode.setNext(newOd);
                     newOd.setPrevious(tempNode);
                     lastNode = newOd;
@@ -50,7 +50,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ck = true;
                  size++;
             }
-        }
+
         return ck;
     }
 
@@ -205,7 +205,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         lastOdFrequency = 0;
     }
 
-    private boolean foundSame(T od) {
+    private boolean addOn(T od) {
         Node tempNode = lastNode;
         boolean sameFood = false;
         if (!isEmpty() && tempNode.getData() instanceof OrderList) {
