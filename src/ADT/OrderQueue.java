@@ -304,7 +304,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             odList = (OrderList) tempNode.getData();
             if (odList.getOrderID().equals(orderID)) {
                 total += odList.getSubtotal();
-                break;
+
             }
             tempNode = tempNode.getNext();
         }
