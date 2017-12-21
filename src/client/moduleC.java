@@ -17,12 +17,8 @@ import static client.FoodDeliveryService.customerList;
 import static client.FoodDeliveryService.affiliateList;
 import static client.FoodDeliveryService.order;
 import static client.FoodDeliveryService.orderList;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ADT.OrderQueueInterface;
 
 /**
