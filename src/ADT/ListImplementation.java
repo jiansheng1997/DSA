@@ -37,11 +37,13 @@ public class ListImplementation<T> implements ListInterface<T>{
             while(tempNode.getNext() != null)
                 tempNode = tempNode.getNext();
             tempNode.setNext(newNode);
+             totalEntries++;
         }
         else{
             firstNode = newNode;
+             totalEntries++;
         }
-     totalEntries++;
+    
         return true;
     }                                //Add new record to the list, total number of records incremented by 1. Return true if successfully added.
     
@@ -332,7 +334,7 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         Node tempNode;
         if (firstNode != null) {
             tempNode = firstNode;
-            while (tempNode != null) {
+           while (tempNode.getNext() != null) {
                 OrderList OL = (OrderList) tempNode.getData();
                 if (OL.getOrderID().equals(OrderID)) {
                     if (tempNode.getNext() != null) {
@@ -340,6 +342,7 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
 
                     } else {
                         firstNode = null;
+                        
                     }
                 }
                 tempNode = tempNode.getNext();
@@ -351,10 +354,11 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         String no = "";
         int num;
         Node tempNode = firstNode;
+        if(firstNode!=null){
         while (tempNode.getNext() != null) {
             tempNode = tempNode.getNext();
         }
-
+        }
         if (id instanceof OrderList) {
             OrderList ol = new OrderList();
             if (firstNode != null) {
