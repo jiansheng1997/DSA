@@ -56,6 +56,8 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
     public boolean add(T newOrder, int frequency) {
         Node newOd = new Node(newOrder);
         boolean ck = false;
+        Node afterNode = null;
+        Node beforeNode = null;
         Node tempNode = lastNode;
         if (newOrder instanceof Order) {
             if (isEmpty()) {
@@ -66,124 +68,223 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ck = true;
                 size++;
             } else {
-                Order od = (Order) firstNode.getData();
-                if ((((Order) newOrder).getDate()).equals(od.getDate())) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                        Date Newtime;
-                        Date Oldtime;
-                        od = (Order) tempNode.getData();
-                        try {
-                            Newtime = sdf.parse(((Order) newOrder).getTime());
-                            Oldtime = sdf.parse(od.getTime());
-                            
-                            if (Newtime.after(Oldtime)) {
-                                if (firstNode.getNext() != null) {
-                                    tempNode.setNext(newOd);
-                                    newOd.setPrevious(tempNode);
-                                    ck = true;
-                                    size++;
-                                } else {
-                                    firstNode.setNext(newOd);
-                                    newOd.setPrevious(firstNode);
-                                    ck = true;
-                                    size++;
-                                }
-                                lastNode = newOd;
-                            } else if (Newtime.before(Oldtime)) {
-                               Node afterNode=null;
-                                while (tempNode != null && Newtime.before(Oldtime)) {
-                                 afterNode=tempNode;
-                                    tempNode =tempNode.getPrevious();
-;   
-                                    if (tempNode != null) {
-                                        od = (Order) tempNode.getData();
-                                        Oldtime = sdf.parse(od.getTime());
-                                     }
-                                }
-         
-                                   if(tempNode!=null){
-                                        (afterNode.getPrevious()).setNext(newOd);         
-                                        newOd.setNext(afterNode);
-                                        newOd.setPrevious(afterNode.getPrevious());
-                                        afterNode.setPrevious(newOd);
-                                        ck = true;
-                                        size++;
-                           
-                                   }else{
-                                       firstNode.setPrevious(newOd);
-                                        newOd.setNext(firstNode);
-                                        newOd.setPrevious(null);
-                                        firstNode = newOd;
-                                        ck = true;
-                                        size++;
-                                   }
-                            }
-                        } catch (ParseException ex) {
-                            Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                Order od = (Order) tempNode.getData();
 
-                    
+                while (tempNode != null && (((Order) newOrder).getDate()).equals(od.getDate())) {
+                    afterNode = tempNode;
+                    tempNode = tempNode.getPrevious();
+
+                    if (tempNode != null) {
+                        od = (Order) tempNode.getData();
+                    }
+                }
+
+                if (tempNode == null) {       //the new order date is same with the whole order record 
+                    tempNode = lastNode;
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                    Date Newtime;
+                    Date Oldtime;
+                    od = (Order) tempNode.getData();
+                    try {
+                        Newtime = sdf.parse(((Order) newOrder).getTime());
+                        Oldtime = sdf.parse(od.getTime());
+
+                        if (Newtime.after(Oldtime)) {
+                            if (firstNode.getNext() != null) {
+                                tempNode.setNext(newOd);
+                                newOd.setPrevious(tempNode);
+                                ck = true;
+                                size++;
+                            } else {
+                                firstNode.setNext(newOd);
+                                newOd.setPrevious(firstNode);
+                                ck = true;
+                                size++;
+                            }
+                            lastNode = newOd;
+                        } else if (Newtime.before(Oldtime)) {
+                            while (tempNode != null && Newtime.before(Oldtime)) {
+                                afterNode = tempNode;
+                                tempNode = tempNode.getPrevious();
+                                if (tempNode != null) {
+                                    od = (Order) tempNode.getData();
+                                    Oldtime = sdf.parse(od.getTime());
+                                }
+                            }
+
+                            if (tempNode != null) {
+                                (afterNode.getPrevious()).setNext(newOd);
+                                newOd.setNext(afterNode);
+                                newOd.setPrevious(afterNode.getPrevious());
+                                afterNode.setPrevious(newOd);
+                                ck = true;
+                                size++;
+
+                            } else {
+                                firstNode.setPrevious(newOd);
+                                newOd.setNext(firstNode);
+                                newOd.setPrevious(null);
+                                firstNode = newOd;
+                                ck = true;
+                                size++;
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 } else {
+
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     Date NewDate;
                     Date OldDate;
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                    Date Newtime;
+                    Date Oldtime;
 
                     try {
                         NewDate = sdf.parse(((Order) newOrder).getDate());
                         OldDate = sdf.parse(od.getDate());
+                        Newtime = sdf2.parse(((Order) newOrder).getTime());
+                        Oldtime = sdf2.parse(od.getTime());
                         if (NewDate.after(OldDate)) {
-                            tempNode.setNext(newOd);
-                            newOd.setPrevious(tempNode);
-                            lastNode = newOd;
-                            ck = true;
-                            size++;
-                        } else if (NewDate.before(OldDate)) {
-                               Node afterNode=null;
-                                while (tempNode != null && NewDate.before(OldDate)) {
-                                 afterNode=tempNode;
-                                    tempNode =tempNode.getPrevious();
-;   
+                            beforeNode = null;
+                            afterNode = null;
+
+                            while (tempNode != null && NewDate.after(OldDate)) {
+
+                                tempNode = tempNode.getNext();
+
+                                if (tempNode != null) {
+                                    od = (Order) tempNode.getData();
+                                    OldDate = sdf.parse(od.getDate());
+                                }
+                            }
+                            
+                            if ((Newtime.after(Oldtime)) && NewDate.equals(OldDate)) {
+
+                                while (tempNode != null && Newtime.after(Oldtime)) {
+                                    beforeNode = tempNode;
+                                    tempNode = tempNode.getNext();
+
                                     if (tempNode != null) {
                                         od = (Order) tempNode.getData();
                                         OldDate = sdf.parse(od.getDate());
-                                     }
+                                        Oldtime = sdf2.parse(od.getTime());
+                                    }
                                 }
-         
-                                   if(tempNode!=null){
-                                        (afterNode.getPrevious()).setNext(newOd);         
-                                        newOd.setNext(afterNode);
-                                        newOd.setPrevious(afterNode.getPrevious());
-                                        afterNode.setPrevious(newOd);
-                                        ck = true;
-                                        size++;
-                           
-                                   }else{
-                                       firstNode.setPrevious(newOd);
-                                        newOd.setNext(firstNode);
-                                        newOd.setPrevious(null);
-                                        firstNode = newOd;
-                                        ck = true;
-                                        size++;
-                                   }
+
+                                if (tempNode != null) {
+
+                                    (beforeNode.getNext()).setPrevious(newOd);
+                                    newOd.setPrevious(beforeNode);
+                                    newOd.setNext(beforeNode.getNext());
+                                    beforeNode.setNext(newOd);
+                                    ck = true;
+                                    size++;
+
+                                } else {
+                                    lastNode.setNext(newOd);
+                                    newOd.setPrevious(lastNode);
+                                    newOd.setNext(null);
+                                    lastNode = newOd;
+                                    ck = true;
+                                    size++;
+                                }
+
+                            } else if ((Newtime.before(Oldtime)) && NewDate.equals(OldDate)) {
+
+                                beforeNode = tempNode.getPrevious();
+                                beforeNode.setNext(newOd);
+                                newOd.setPrevious(beforeNode);
+                                newOd.setNext(tempNode);
+                                tempNode.setPrevious(newOd);
+                                ck = true;
+                                size++;
+                            }else{
+                            
+                            if (tempNode == null) {
+                                lastNode.setNext(newOd);
+                                newOd.setPrevious(lastNode);
+                                newOd.setNext(null);
+                                lastNode = newOd;
+                                ck = true;
+                                size++;
+
+                            }
+                            
+                            }
+
+ 
+                        } else if (NewDate.before(OldDate)) {
+                            afterNode = null;
+                            while (tempNode != null && NewDate.before(OldDate)) {
+                                afterNode = tempNode;
+                                tempNode = tempNode.getPrevious();
+                                if (tempNode != null) {
+                                    od = (Order) tempNode.getData();
+                                    OldDate = sdf.parse(od.getDate());
+                                }
+                            }
+
+                            if ((Newtime.before(Oldtime)) && NewDate.equals(OldDate)) {
+                                while (tempNode != null && Newtime.before(Oldtime)) {
+                                    afterNode = tempNode;
+                                    tempNode = tempNode.getPrevious();
+
+                                    if (tempNode != null) {
+                                        od = (Order) tempNode.getData();
+                                        OldDate = sdf.parse(od.getDate());
+                                        Oldtime = sdf2.parse(od.getTime());
+                                    }
+                                }
+                            }
+
+                            if (tempNode != null) {
+                                (afterNode.getPrevious()).setNext(newOd);
+                                newOd.setNext(afterNode);
+                                newOd.setPrevious(afterNode.getPrevious());
+                                afterNode.setPrevious(newOd);
+                                ck = true;
+                                size++;
+
+                            } else {
+                                firstNode.setPrevious(newOd);
+                                newOd.setNext(firstNode);
+                                newOd.setPrevious(null);
+                                firstNode = newOd;
+                                ck = true;
+                                size++;
+                            }
                         }
                     } catch (ParseException ex) {
                         ck = false;
                         Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                 }
+
+            }
+            if (ck) {
+
                 if (frequency > lastOdFrequency && frequency >= 5) {
                     if (!newOd.equals(firstNode)) {
                         if (firstNode.getNext() != null) {
                             if (!newOd.equals(lastNode)) {
-                                newOd.getPrevious().setNext(newOd.getNext());
-                                newOd.setNext(newOd.getPrevious());
-                                newOd.setPrevious( newOd.getPrevious().getPrevious());                                
-                                newOd.getPrevious().setPrevious(newOd);
-                            }else{
-                            newOd.setNext(lastNode);
-                            lastNode.getPrevious().setNext(newOd);
-                            newOd.setPrevious(lastNode.getPrevious());
-                            lastNode.setPrevious(newOd);  
+                               beforeNode = newOd.getPrevious();
+                                afterNode = newOd.getNext();
+                                
+                                beforeNode.getPrevious().setNext(newOd);
+                                afterNode.setPrevious(beforeNode);
+                                beforeNode.setNext(afterNode);
+                                newOd.setNext(beforeNode);
+                                newOd.setPrevious(beforeNode.getPrevious());
+                                beforeNode.setPrevious(newOd);
+                            } else {
+                                newOd.setNext(lastNode);
+                                lastNode.getPrevious().setNext(newOd);
+                                newOd.setPrevious(lastNode.getPrevious());
+                                lastNode.setPrevious(newOd);
                             }
                         } else {
                             newOd.setNext(firstNode);
@@ -193,17 +294,12 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         }
                     }
                 }
+                lastOdFrequency = frequency;
             }
-
-        }
-        if (ck) {
-            lastOdFrequency = frequency;
         }
 
         return ck;
     }
-
-
 
     public int getSize() {
         return size;
