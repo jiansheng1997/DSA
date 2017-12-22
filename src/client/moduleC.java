@@ -34,7 +34,7 @@ public class moduleC {
     FoodDeliveryService FDS = new FoodDeliveryService();
 
     public void menu() {
-
+        
         String choice;
         do {
             System.out.println();
@@ -60,6 +60,7 @@ public class moduleC {
     }
 
     public moduleC() {
+
         System.out.println();
         menu();
     }
@@ -118,7 +119,7 @@ public class moduleC {
                     temp = sc.nextLine();
                 }
                 no2 = Integer.parseInt(temp);
-                sc.reset();
+               
                 qty = 0;
 
                 System.out.print("Quantity(1 to 10) >");
@@ -149,6 +150,7 @@ public class moduleC {
 
         String c;
         do {
+            c="";
             OLqueue.displayOrderList(od.getOrderID());
             System.out.print("(1-Confirm 2-Cancel) >");
             c = sc.nextLine();
@@ -176,19 +178,15 @@ public class moduleC {
 
     }
 
+
+    
     public void viewOrderQueue() {
-        int No = 1;
         if (!ODqueue.isEmpty()) {
-            System.out.println("\nOrder Queue\n==========================");
+            System.out.println("\nOrder Queue\n============================================================================");
         } else {
             System.out.println("\nThere are no queue.");
         }
-        for(int i=0;i<ODqueue.getSize();i++){
-            Order ORDER = (Order) ODqueue.getFront();
-            System.out.println(No + ". Order ID : " + ORDER.getOrderID() + "|Order Date : " + ORDER.getDate() + "|Order Time : " + ORDER.getTime() + " |Status : "
-                    + ORDER.getStatus() + "|Total : RM " + String.format("%.2f", ORDER.getTotal()));
-            No++;
-        }
+        ODqueue.displayCurrentQueue();
         System.out.print("\nBack to Menu?(Menu-1 ,Please any key to exit)");
         String temp = sc.nextLine();
         if (temp.equals("1")) {
