@@ -41,10 +41,11 @@ public class moduleC {
             System.out.println("1. Make Order");
             System.out.println("2. View order queue");
             System.out.println("3. Retreive Customer's Info");
+            System.out.println("4. Generate Daily Order Report");
             System.out.println("0. Back to Main Menu");
             System.out.print("Enter your choice:");
             choice = sc.nextLine();
-        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("0"));
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")  && !choice.equals("4") && !choice.equals("0"));
 
         if (choice.equals("1")) {
             String id = login();
@@ -53,7 +54,9 @@ public class moduleC {
             viewOrderQueue();
         } else if (choice.equals("3")) {
             retrieveCustomerInfo();
-        } else if (choice.equals("0")) {
+        } else if (choice.equals("4")) {
+            generateReport();
+        }else if (choice.equals("0")) {
             FDS.MainMenu();
         }
 
@@ -107,7 +110,6 @@ public class moduleC {
             if (firstOrder == 1) {
                 od.setOrderID(order.generateID(od));
             }
-
             do {
                 menuStack = moA.displayMenuByRestaurant(no);
                 menuNo = menuStack.size() + 1;
@@ -175,7 +177,6 @@ public class moduleC {
                 menu();
             }
         } while (!c.equals("1") && !c.equals("2"));
-
     }
 
     public void viewOrderQueue() {
@@ -231,6 +232,25 @@ public class moduleC {
         } while (!temp.equals("0"));
     }
 
+    public void generateReport() {
+        String report = "\t\t\t\t\tDaily Order Report\t\t\t\t\tDate :"+getCurrentDate()+"\n======================================================================================================================\n";
+        String generate = ODqueue.dailyOrderReport();
+        if (!generate.equals("")) {
+            report += ODqueue.dailyOrderReport();
+            System.out.println(report);
+        }else{
+            System.out.println("\nThere are no record.");
+        }
+        System.out.print("\nBack to Menu?(Menu-1 ,Please any key to exit)");
+        String temp = sc.nextLine();
+        if (temp.equals("1")) {
+            menu();
+        } else {
+            FDS.MainMenu();
+        }          
+    }
+
+    
     public String getCurrentDate() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

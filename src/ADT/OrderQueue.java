@@ -9,6 +9,7 @@ import entity.Order;
 import entity.OrderList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -290,6 +291,8 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 }
                                 
                             } else {
+                                lastNode=newOd.getPrevious();
+                                lastNode.setNext(null);
                                 newOd.setNext(lastNode);
                                 lastNode.getPrevious().setNext(newOd);
                                 newOd.setPrevious(lastNode.getPrevious());
@@ -475,5 +478,29 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
             
             }
         }
+    }
+
+    public String dailyOrderReport() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        String currentDate = sdf.format(cal.getTime());
+        String report = "";
+        try {
+            Date CurrrentDate = sdf.parse(currentDate);
+            Node tempNode = firstNode;
+            while (tempNode != null) {
+                Order od = (Order) tempNode.getData();
+                Date odDate = sdf.parse(od.getDate());
+                if (odDate.equals(CurrrentDate)) {
+                    report += "Order ID : " + od.getOrderID() + "|Order Date : " + od.getDate() + "|Order Time : " + od.getTime() + " |Status : "
+                            + od.getStatus() + "|Total : RM " + String.format("%.2f", od.getTotal()) +"|Customer ID :"+ od.getCustID() + "\n";
+                }
+                tempNode = tempNode.getNext();
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+        return report;
     }
 }
