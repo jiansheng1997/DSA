@@ -291,12 +291,22 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 }
                                 
                             } else {
+                                 beforeNode = newOd.getPrevious();
+                                 if (!beforeNode.equals(firstNode)) {
                                 lastNode=newOd.getPrevious();
                                 lastNode.setNext(null);
                                 newOd.setNext(lastNode);
                                 lastNode.getPrevious().setNext(newOd);
                                 newOd.setPrevious(lastNode.getPrevious());
                                 lastNode.setPrevious(newOd);
+                                 }else{
+                                     firstNode.setPrevious(newOd);
+                                     newOd.setNext(firstNode);
+                                     newOd.setPrevious(null);
+                                     lastNode=firstNode;
+                                     lastNode.setNext(null);
+                                     firstNode=newOd;
+                                 }
                             }
                         } else {
                             newOd.setNext(firstNode);
