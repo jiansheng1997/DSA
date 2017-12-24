@@ -79,7 +79,6 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         od = (Order) tempNode.getData();
                     }
                 }
-                
                 if (tempNode == null) {       //the new order date is same with the whole order record 
                     tempNode = lastNode;
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -112,7 +111,6 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                     Oldtime = sdf.parse(od.getTime());
                                 }
                             }
-                            
                             if (tempNode != null) {
                                 (afterNode.getPrevious()).setNext(newOd);
                                 newOd.setNext(afterNode);
@@ -176,14 +174,12 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                                 }
 
                                 if (tempNode != null) {
-
                                     (beforeNode.getNext()).setPrevious(newOd);
                                     newOd.setPrevious(beforeNode);
                                     newOd.setNext(beforeNode.getNext());
                                     beforeNode.setNext(newOd);
                                     ck = true;
                                     size++;
-
                                 } else {
                                     lastNode.setNext(newOd);
                                     newOd.setPrevious(lastNode);
@@ -490,27 +486,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         }
     }
 
-    public String dailyOrderReport() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar cal = Calendar.getInstance();
-        String currentDate = sdf.format(cal.getTime());
-        String report = "";
-        try {
-            Date CurrrentDate = sdf.parse(currentDate);
-            Node tempNode = firstNode;
-            while (tempNode != null) {
-                Order od = (Order) tempNode.getData();
-                Date odDate = sdf.parse(od.getDate());
-                if (odDate.equals(CurrrentDate)) {
-                    report += "Order ID : " + od.getOrderID() + "|Order Date : " + od.getDate() + "|Order Time : " + od.getTime() + " |Status : "
-                            + od.getStatus() + "|Total : RM " + String.format("%.2f", od.getTotal()) +"|Customer ID :"+ od.getCustID() + "\n";
-                }
-                tempNode = tempNode.getNext();
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
-        }
-   
-        return report;
-    }
+
+    
+    
 }

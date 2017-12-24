@@ -86,8 +86,8 @@ public class FoodDeliveryService {
         Order od1 =new Order("OD1000","C0001","8/11/2017","18:22:01","Delivered",12);
         Order od2 =new Order("OD1001","C0002","12/11/2017","10:43:12","Delivered",35);
         Order od3 =new Order("OD1002","C0003","28/11/2017","22:11:35","Delivered",19.8);    
-        Order od4 =new Order("OD1003","C0001","12/12/2017","09:46:51","Delivered",12.8); 
-        Order od5 =new Order("OD1004","C0001","14/12/2017","05:35:54","Delivered",199.8);         
+        Order od4 =new Order("OD1003","C0001","3/12/2017","09:46:51","Delivered",12.8); 
+        Order od5 =new Order("OD1004","C0001","3/12/2017","05:35:54","Delivered",199.8);         
         Order od6 =new Order("OD1005","C0001","3/12/2017","01:56:43","Delivered",46.9);
         Order od7 =new Order("OD1006","C0001","8/12/2017","09:34:43","Delivered",28.5);
         Order od8 =new Order("OD1007","C0003","10/12/2017","23:56:11","Delivered",17.9);
@@ -113,7 +113,7 @@ public class FoodDeliveryService {
         orderList.add(odl1);  orderList.add(odl2); orderList.add(odl3);
         orderList.add(odl4);  orderList.add(odl5); orderList.add(odl6); 
         orderList.add(odl7);  orderList.add(odl8); orderList.add(odl9);
-        orderList.add(odl20);     orderList.add(odl21);
+        orderList.add(odl20); orderList.add(odl21);
         
         list.add(new DeliveryMan("DM"+1, "Quek Wei Jian   ", "Working", 20, 5, 3000.55, "012-3456789", "Quek Address", "Clock Out", 1, 10));
 	list.add(new DeliveryMan("DM"+2, "Phuah Wai Yan   ", "Working", 18, 3, 4500.99, "012-9876543", "Phuah Address", "Clock In", 2, 20));

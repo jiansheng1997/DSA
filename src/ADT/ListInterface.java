@@ -48,7 +48,11 @@ public interface ListInterface<T> {
 
     public T getlatestOrder();
 
+    boolean reNewFrequency(ListInterface order);
+    
     public int addOrderFrequency(String orderID);
+    
+    public String dailyOrderReport();
 
-    public boolean reNewFrequency(ListInterface order);
+
 }

@@ -233,10 +233,11 @@ public class moduleC {
     }
 
     public void generateReport() {
-        String report = "\t\t\t\t\tDaily Order Report\t\t\t\t\tDate :"+getCurrentDate()+"\n======================================================================================================================\n";
-        String generate = ODqueue.dailyOrderReport();
+        String report = "\t\t\t\t\tDaily Order Report\t\t\t\t\tDate :"+getCurrentDate()+"\n======================================================================================================================\n"
+                + "Order ID\t|\tOrder Date\t|\tOrder Time\t| Order Status\t| Total Amount\t| Customer ID\n======================================================================================================================\n";
+        String generate = order.dailyOrderReport();
         if (!generate.equals("")) {
-            report += ODqueue.dailyOrderReport();
+            report += order.dailyOrderReport();
             System.out.println(report);
         }else{
             System.out.println("\nThere are no record.");

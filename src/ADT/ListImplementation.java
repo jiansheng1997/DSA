@@ -177,22 +177,6 @@ public class ListImplementation<T> implements ListInterface<T>{
                 return found;
     }
     
-    public boolean Login(String id,String pass){
-        boolean found = false;
-        Node tempNode = firstNode;
-if (!isEmpty() && tempNode.getData() instanceof Customer) {
-            for (int i = 1; i <= totalEntries; i++) {
-                Customer cust = (Customer)tempNode.getData();
-                if (cust.getCustomerID().equals(id)) {
-                    if (cust.getPassword().equals(pass))
-                         found= true;
-                }
-                tempNode = tempNode.getNext();
-        }
-
-        } 
-        return found;
-    }
     
     @Override
     public T retrieveInstance(String info){
@@ -332,6 +316,24 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         return biggest;
     }                         //Find the most expensive price from the menu. Return a double value.
 
+    public boolean Login(String id, String pass) {
+        boolean found = false;
+        Node tempNode = firstNode;
+        if (!isEmpty() && tempNode.getData() instanceof Customer) {
+            for (int i = 1; i <= totalEntries; i++) {
+                Customer cust = (Customer) tempNode.getData();
+                if (cust.getCustomerID().equals(id)) {
+                    if (cust.getPassword().equals(pass)) {
+                        found = true;
+                    }
+                }
+                tempNode = tempNode.getNext();
+            }
+
+        }
+        return found;
+    }
+
     public void cancelOrder(String OrderID) {
         Node tempNode;
         if (firstNode != null) {
@@ -460,4 +462,30 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         }
         return orderFq;
     }
+    
+    public String dailyOrderReport() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        String currentDate = sdf.format(cal.getTime());
+        String report = "";
+        try {
+            Date CurrrentDate = sdf.parse(currentDate);
+            Node tempNode = firstNode;
+            while (tempNode != null) {
+                Order od = (Order) tempNode.getData();
+                Date odDate = sdf.parse(od.getDate());
+                if (odDate.equals(CurrrentDate)) {
+                    report += od.getOrderID() + "\t\t|\t" + od.getDate() + "\t| \t" + od.getTime() + " \t| "
+                            + od.getStatus() + "\t| RM " + String.format("%.2f", od.getTotal()) +"\t| "+ od.getCustID() + "\n";
+                }
+                tempNode = tempNode.getNext();
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+        return report;
+    }    
+    
+    
 }
