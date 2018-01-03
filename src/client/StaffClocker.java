@@ -5,7 +5,7 @@
  */
 package client;
 
-import ADT.List;
+import ADT.DeliverymanList;
 import entity.DeliveryMan;
 import java.util.Scanner;
 
@@ -17,7 +17,7 @@ public class StaffClocker {
 
 	private Scanner scanner = new Scanner(System.in);
 
-	public List<DeliveryMan> staffClockerMain(List<DeliveryMan> list) {
+	public DeliverymanList<DeliveryMan> staffClockerMain(DeliverymanList<DeliveryMan> list) {
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println((i + 1) + ". " + list.get(i).getName());
 		}

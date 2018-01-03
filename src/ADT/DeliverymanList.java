@@ -11,7 +11,7 @@ import entity.DeliveryMan;
  *
  * @author Lenovo
  */
-public class List<T> implements QuekListInterface<T> {
+public class DeliverymanList<T> implements DeliverymanListInterface<T> {
 
 	private static final int INDEX_NUMBER = 1;
 	private static final int INDEX_VALUE = 0;
@@ -19,7 +19,7 @@ public class List<T> implements QuekListInterface<T> {
 	private Node lastNode;
 	private int size;
 
-	public List() {
+	public DeliverymanList() {
 		size = 0;
 		firstNode = null;
 		lastNode = null;
@@ -104,7 +104,7 @@ public class List<T> implements QuekListInterface<T> {
 		return index;
 	}
 	
-	public int[][] getDesc(List<DeliveryMan> list) {
+	public int[][] getDesc(DeliverymanList<DeliveryMan> list) {
 		int[][] desc = new int[list.size()][2];
 		int[] temp = new int[2];
 

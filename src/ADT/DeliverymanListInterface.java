@@ -11,7 +11,7 @@ import entity.DeliveryMan;
  *
  * @author Lenovo
  */
-public interface QuekListInterface<T> {
+public interface DeliverymanListInterface<T> {
 	public T get(int i);
 	public T remove(int i);
 	public boolean isEmpty();

@@ -6,16 +6,16 @@
 package client;
 
 import entity.DeliveryMan;
-import ADT.List;
+import ADT.DeliverymanList;
 import ADT.ListImplementation;
 import ADT.ListInterface;
-import ADT.QuekListInterface;
 import entity.Affiliate;
 import entity.Customer;
 import entity.Menu;
 import entity.Order;
 import entity.OrderList;
 import java.util.Scanner;
+import ADT.DeliverymanListInterface;
 
 /**
  *
@@ -29,7 +29,7 @@ public class FoodDeliveryService {
     static ListInterface<Affiliate> affiliateList = new ListImplementation<>();
     static ListInterface<Menu> menuList = new ListImplementation<>();
     static ListInterface<Customer> customerList = new ListImplementation<>();
-    static QuekListInterface<DeliveryMan> list = new List<>();
+    static DeliverymanListInterface<DeliveryMan> list = new DeliverymanList<>();
     static ListInterface<Order> order = new ListImplementation<>();
     static ListInterface<OrderList> orderList = new ListImplementation<>();
     Scanner sc = new Scanner(System.in);
