@@ -30,11 +30,11 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         size=0;
     }
 
-    public boolean add(T newEntry) {
-        Node newOd = new Node(newEntry);
+    public boolean add(T newOrder) {
+        Node newOd = new Node(newOrder);
         boolean ck = false;
         Node tempNode = lastNode;
-        if (newEntry instanceof OrderList) {
+        if (newOrder instanceof OrderList) {
 
             if (isEmpty()) {
                 firstNode = newOd;
@@ -42,7 +42,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 ck = true;
                 size++;
             } else {
-                if (!foundSame(newEntry)) {
+                if (!foundSame(newOrder)) {
                     tempNode.setNext(newOd);
                     newOd.setPrevious(tempNode);
                     lastNode = newOd;
@@ -54,11 +54,11 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
         return ck;
     }
 
-    public boolean add(T newEntry, int frequency) {
-        Node newOd = new Node(newEntry);
+    public boolean add(T newOrder, int frequency) {
+        Node newOd = new Node(newOrder);
         boolean ck = false;
         Node tempNode = lastNode;
-        if (newEntry instanceof Order) {
+        if (newOrder instanceof Order) {
             if (isEmpty()) {
                 newOd.setPrevious(null);
                 firstNode = newOd;
@@ -69,7 +69,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                 size++;
             } else {
                 Order od = (Order) tempNode.getData();
-                if ((((Order) newEntry).getDate()).equals(od.getDate())) {
+                if ((((Order) newOrder).getDate()).equals(od.getDate())) {
                     if (frequency > lastOdFrequency && frequency >= 5) {
                         if (firstNode.getNext() != null) {
                             newOd.setPrevious(lastNode.getPrevious());
@@ -89,7 +89,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                         Date Newtime;
                         Date Oldtime;
                         try {
-                            Newtime = sdf.parse(((Order) newEntry).getTime());
+                            Newtime = sdf.parse(((Order) newOrder).getTime());
                             Oldtime = sdf.parse(od.getTime());
                             if (Newtime.after(Oldtime)) {
                                 if (firstNode.getNext() != null) {
@@ -129,7 +129,7 @@ public class OrderQueue<T> implements OrderQueueInterface<T> {
                     Date OldDate;
 
                     try {
-                        NewDate = sdf.parse(((Order) newEntry).getDate());
+                        NewDate = sdf.parse(((Order) newOrder).getDate());
                         OldDate = sdf.parse(od.getDate());
                         if (NewDate.after(OldDate)) {
                             tempNode.setNext(newOd);
