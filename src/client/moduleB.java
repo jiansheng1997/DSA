@@ -22,8 +22,8 @@ public class moduleB {
 		String moreStaff;
 		int deliveryManUpdateNumber;
 		int moreUpdate;
-
-		
+		String stringHolder = "";
+		int intHolder;
 
 		do {
 			System.out.println("0. End");
@@ -33,9 +33,19 @@ public class moduleB {
 			System.out.println("4. View Delivery Man Report");
 
 			System.out.print("Enter you choice : ");
-			answer = Integer.parseInt(scanner.nextLine());
-
-			if (answer == 1) {
+			String inputStr = scanner.nextLine();
+			
+			if (isDigit(inputStr)) {
+				answer = Integer.parseInt(inputStr);
+			} else {
+				answer = -1;
+			}
+			
+			if (answer == -1) {
+				spacing();
+				System.out.println("You have input an invalid character please try again");
+				
+			} else if (answer == 1) {
 				do {
 					spacing();
 
@@ -46,11 +56,16 @@ public class moduleB {
 					System.out.print("Enter status             : ");
 					deliveryMan.setStatus(scanner.nextLine());
 					System.out.print("Enter age                : ");
-					deliveryMan.setAge(scanner.nextInt());
-					deliveryMan.setNumberOfDelivery(0);
+					stringHolder = scanner.nextLine();
+					if (isDigit(stringHolder)) {
+						deliveryMan.setAge(Integer.parseInt(stringHolder));
+					}
 					System.out.print("Enter salary             : ");
-					deliveryMan.setSalary(scanner.nextDouble());
-					scanner.nextLine();
+					stringHolder = scanner.nextLine();
+					if (isDigit(stringHolder)) {
+						deliveryMan.setSalary(Double.parseDouble(stringHolder));
+					}
+					
 					System.out.print("Enter address            : ");
 					deliveryMan.setAddress(scanner.nextLine());
 					System.out.print("Enter phone number       : ");
@@ -62,7 +77,7 @@ public class moduleB {
 					deliveryMan.setId("DM" + (list.size()+1));
 					list.add(deliveryMan);
 
-					System.out.print("Do you wish to continue to add staff member? (Y/N)");
+					System.out.print("Do you wish to continue to add staff member? (Y)");
 					moreStaff = scanner.nextLine();
 
 				} while (moreStaff.equals("Y") || moreStaff.equals("y"));
@@ -163,48 +178,26 @@ public class moduleB {
 				spacing();
 				System.out.println("Delivery Man Report   Number of delivery made  Distance Travel Made (KM) ");
 				double averageDelivery = 0;
-				int highDelivery = list.get(0).getNumberOfDelivery();
-				int lowDelivery = list.get(0).getNumberOfDelivery();
-				int[][] desc = new int[list.size()][2];
-				int[] temp = new int[2];
-
+				int[] numberOfDelivery = new int[list.size()];
+				int[] index = new int[list.size()];
 				for (int i = 0; i < list.size(); i++) {
-					desc[i][0] = list.get(i).getNumberOfDelivery();
-					desc[i][1] = i;
+					numberOfDelivery[i] = list.get(i).getNumberOfDelivery();
+					index[i] = i;
 				}
-
+				
+				int[] descIndex = list.getDesc(index, numberOfDelivery);
+				
 				for (int i = 0; i < list.size(); i++) {
-					
-					averageDelivery += list.get(i).getNumberOfDelivery();
-					if (lowDelivery > list.get(i).getNumberOfDelivery()) {
-						lowDelivery = list.get(i).getNumberOfDelivery();
-					}
-					if (highDelivery < list.get(i).getNumberOfDelivery()) {
-						highDelivery = list.get(i).getNumberOfDelivery();
-					}
-
-					for (int o = 0; o < list.size() - 1; o++) {
-						if (desc[o][0] < desc[o + 1][0]) {
-							temp[0] = desc[o][0];
-							temp[1] = desc[o][1];
-
-							desc[o][0] = desc[o + 1][0];
-							desc[o][1] = desc[o + 1][1];
-
-							desc[o + 1][0] = temp[0];
-							desc[o + 1][1] = temp[1];
-						}
-
-					}
-				}
-				for (int i = 0; i < list.size(); i++) {
-					System.out.println(i + 1 + ". " + list.get(desc[i][1]).getName() + "\t\t" + list.get(desc[i][1]).getNumberOfDelivery() + "\t\t" + list.get(desc[i][1]).getDistanceTravel());
+					averageDelivery += list.get(descIndex[i]).getNumberOfDelivery();
+					System.out.println(i + 1 + ". " + list.get(descIndex[i]).getName() + "\t\t" + list.get(descIndex[i]).getNumberOfDelivery() + "\t\t" + list.get(descIndex[i]).getDistanceTravel());
 				}
 				System.out.println("Daily Number of Delivery Report");
 				System.out.println("Average Delivery Made   : " + averageDelivery / list.size());
-				System.out.println("Highest Delivery Made   : " + desc[0][0]);
-				System.out.println("Lowest Delivery Made    : " + desc[list.size()-1][0]);
+				System.out.println("Highest Delivery Made   : " + list.get(descIndex[0]).getNumberOfDelivery());
+				System.out.println("Lowest Delivery Made    : " + list.get(descIndex[list.size()-1]).getNumberOfDelivery());
 
+			} else {
+				System.out.println("Please Enter from 0 ~ 4");
 			}
 			spacing();
 		} while (answer != 0);
@@ -221,6 +214,20 @@ public class moduleB {
 		return deliveryList;
 	}
 
+	
+	public static boolean isDigit(String validateString) {
+		for (int i = 0; i < validateString.length(); i++) {
+			if (!Character.isDigit(validateString.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean isDigit(int validateInt) {	
+		return Character.isDigit(validateInt);
+	}
+	
 
 	private static void spacing() {
 		System.out.println("\n\n\n\n\n");

@@ -5,6 +5,8 @@
  */
 package ADT;
 
+import entity.DeliveryMan;
+
 /**
  *
  * @author Lenovo
@@ -17,4 +19,5 @@ public interface QuekListInterface<T> {
 	public void set(int position, T element);
 	public void clear();
 	public int size();
+	public int[] getDesc(int[] index, int[] value);
 }
