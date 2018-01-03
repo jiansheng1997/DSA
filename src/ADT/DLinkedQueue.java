@@ -205,7 +205,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
         lastOdFrequency = 0;
     }
 
-    public boolean foundSame(T od) {
+    private boolean foundSame(T od) {
         Node tempNode = lastNode;
         boolean sameFood = false;
         if (!isEmpty() && tempNode.getData() instanceof OrderList) {
@@ -274,11 +274,6 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
             }
             tempNode = tempNode.getNext();
         }
-    }
-
-    public void clear() {
-        firstNode = null;
-        lastNode = null;
     }
 
     public void displayOrderList(String id) {
