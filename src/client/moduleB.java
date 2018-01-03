@@ -15,7 +15,7 @@ import static client.FoodDeliveryService.list;
 public class moduleB {
 
 	public moduleB() {
-
+                FoodDeliveryService FDS= new FoodDeliveryService();
 		Scanner scanner = new Scanner(System.in);
 		DeliveryMan deliveryMan;
 		int answer;
@@ -26,7 +26,7 @@ public class moduleB {
 		int intHolder;
 
 		do {
-			System.out.println("0. End");
+			System.out.println("0. Back to Main Menu");
 			System.out.println("1. Add Delivery Man");
 			System.out.println("2. View Delivery Man Detail");
 			System.out.println("3. Update Delivery Man Detail");
@@ -40,7 +40,10 @@ public class moduleB {
 			} else {
 				answer = -1;
 			}
-			
+			if(answer==0){
+                            FDS.MainMenu();
+                        }
+                        
 			if (answer == -1) {
 				spacing();
 				System.out.println("You have input an invalid character please try again");

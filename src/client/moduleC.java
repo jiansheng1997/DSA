@@ -35,7 +35,7 @@ public class moduleC {
     static OrderQueueInterface<Order> ODqueue = new OrderQueue<>();
 
     Scanner sc = new Scanner(System.in);
-    FoodDeliveryService FCS = new FoodDeliveryService();
+    FoodDeliveryService FDS = new FoodDeliveryService();
 
     public void menu() {
 
@@ -58,7 +58,7 @@ public class moduleC {
         } else if (choice.equals("3")) {
             retrieveCustomerInfo();
         } else if (choice.equals("0")) {
-            FCS.MainMenu();
+            FDS.MainMenu();
         }
 
     }
@@ -198,7 +198,7 @@ public class moduleC {
         if (temp.equals("1")) {
             menu();
         } else {
-            FCS.MainMenu();
+            FDS.MainMenu();
         }
     }
 

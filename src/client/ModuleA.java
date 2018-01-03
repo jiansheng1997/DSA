@@ -11,7 +11,7 @@ import static client.FoodDeliveryService.menuList;
 
 public class ModuleA {
 
-                    FoodDeliveryService FCS=new FoodDeliveryService();
+    FoodDeliveryService FDS=new FoodDeliveryService();
     StackInterface<Menu> menuStack = new StackImplementation<>();
     public ModuleA(){
     }
@@ -39,7 +39,7 @@ public class ModuleA {
             int choice = Integer.parseInt(selection);
             switch (choice) {
                 case 0: 
-                    FCS.MainMenu();
+                    FDS.MainMenu();
                     break;
                 case 1:
                     registerAsAffiliate();
