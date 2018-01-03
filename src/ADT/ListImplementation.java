@@ -412,22 +412,20 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         return result;
     }
 
-    public void reNewFrequency(QueueInterface order) {
-
+    public boolean reNewFrequency(ListInterface order) {
+        boolean find = false;
         try {
-            boolean find = false;
             Calendar cal = Calendar.getInstance();
             int month = cal.get(Calendar.MONTH);
             month++;
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date OdDate = sdf.parse(((Order) getlatestOrder()).getDate());
+            Date OdDate = sdf.parse(((Order)(order.getlatestOrder())).getDate());
             if (cal.getTime().after(OdDate)) {
                 if (!isEmpty()) {
                     Node tempNode = firstNode;
                     while (tempNode.getNext() != null) {
                         if (OdDate.getMonth() + 1 != month) {
                             ((Customer) tempNode.getData()).setOrderFrequency(0);
-                            order.resetFrequency();
                             find = true;
                         }
                         tempNode = tempNode.getNext();
@@ -437,16 +435,16 @@ if (!isEmpty() && tempNode.getData() instanceof Customer) {
         } catch (ParseException ex) {
             Logger.getLogger(ListImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return find;
     }
 
-    public int addOrderFrequency(String id) {
+    public int addOrderFrequency(String CustID) {
         int orderFq = 0;
         if (!isEmpty()) {
             Node tempNode = firstNode;
             Customer cus = (Customer) tempNode.getData();
             while (tempNode.getNext() != null) {
-                if (id.equals(tempNode.getData())) {
+                if (CustID.equals(cus.getCustomerID())) {
                     orderFq = cus.getOrderFrequency() + 1;
                     cus.setOrderFrequency(orderFq);
                     break;

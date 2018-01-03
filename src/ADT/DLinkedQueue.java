@@ -22,10 +22,12 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
     private Node<T> firstNode;
     private Node<T> lastNode;
     private int lastOdFrequency;
+    private int size;
 
     public DLinkedQueue() {
         firstNode = null;
         lastNode = null;
+        size=0;
     }
 
     public boolean add(T newEntry) {
@@ -38,6 +40,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                 firstNode = newOd;
                 lastNode = newOd;
                 ck = true;
+                size++;
             } else {
                 if (!foundSame(newEntry)) {
                     tempNode.setNext(newOd);
@@ -45,6 +48,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                     lastNode = newOd;
                 }
                 ck = true;
+                 size++;
             }
         }
         return ck;
@@ -62,6 +66,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                 lastNode = newOd;
                 lastOdFrequency = frequency;
                 ck = true;
+                size++;
             } else {
                 Order od = (Order) tempNode.getData();
                 if ((((Order) newEntry).getDate()).equals(od.getDate())) {
@@ -71,11 +76,13 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                             newOd.setNext(lastNode);
                             lastNode.setPrevious(newOd);
                             ck = true;
+                            size++;  
                         } else {
                             firstNode = newOd;
                             firstNode.setNext(lastNode);
                             lastNode.setPrevious(firstNode);
                             ck = true;
+                            size++;
                         }
                     } else {
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -89,10 +96,12 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                                     lastNode.setNext(newOd);
                                     newOd.setPrevious(lastNode);
                                     ck = true;
+                                    size++;
                                 } else {
                                     firstNode.setNext(newOd);
                                     newOd.setPrevious(firstNode);
                                     ck = true;
+                                    size++;
                                 }
                                 lastNode = newOd;
                             } else if (Newtime.before(Oldtime)) {
@@ -101,11 +110,13 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                                     newOd.setNext(lastNode);
                                     lastNode.setPrevious(newOd);
                                     ck = true;
+                                    size++;
                                 } else {
                                     firstNode = newOd;
                                     firstNode.setNext(lastNode);
                                     lastNode.setPrevious(firstNode);
                                     ck = true;
+                                    size++;
                                 }
                             }
                         } catch (ParseException ex) {
@@ -125,6 +136,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                             newOd.setPrevious(tempNode);
                             lastNode = newOd;
                             ck = true;
+                            size++;
                         } else if (NewDate.before(OldDate)) {
                             if (tempNode.getPrevious() != null) {
                                 newOd.setPrevious(tempNode.getPrevious());
@@ -134,6 +146,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                             tempNode.setPrevious(newOd);
                             firstNode = newOd;
                             ck = true;
+                            size++;
                         }
                     } catch (ParseException ex) {
                         ck = false;
@@ -146,6 +159,10 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
         return ck;
     }
 
+    public int getSize() {
+        return size;
+    }         
+    
     public T getOrderRecord(String id) {
         Node tempNode = firstNode;
         T order = null;

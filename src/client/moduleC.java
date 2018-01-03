@@ -82,9 +82,11 @@ public class moduleC {
         return id;
     }
 
+    
     public void makeOrder(String CustID) {
 
-        customerList.reNewFrequency(ODqueue);
+        if(customerList.reNewFrequency(order))
+            ODqueue.resetFrequency();
 
         StackInterface<Menu> menuStack = new StackImplementation<>();
         int firstOrder = 1;
@@ -185,7 +187,7 @@ public class moduleC {
         } else {
             System.out.println("\nThere are no queue.");
         }
-        while (!ODqueue.isEmpty()) {
+        for(int i=0;i<ODqueue.getSize();i++){
             Order ORDER = (Order) ODqueue.getFront();
             System.out.println(No + ". Order ID : " + ORDER.getOrderID() + "|Order Date : " + ORDER.getDate() + "|Order Time : " + ORDER.getTime() + " |Status : "
                     + ORDER.getStatus() + "|Total : RM " + String.format("%.2f", ORDER.getTotal()));
@@ -203,11 +205,13 @@ public class moduleC {
     public void retrieveCustomerInfo() {
         String phoneNo;
         Customer cc = new Customer();
-        int count = 3;
+
         boolean ck = true;
         String temp = "";
         do {
+            int count = 3;
             do {
+                 
                 System.out.print("Enter the customer phone number to retrieve the customer information :");
                 phoneNo = sc.nextLine();
                 cc = customerList.retrieveInstance(phoneNo);
