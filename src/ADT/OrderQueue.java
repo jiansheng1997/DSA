@@ -17,14 +17,14 @@ import java.util.logging.Logger;
  *
  * @author user1
  */
-public class DLinkedQueue<T> implements QueueInterface<T> {
+public class OrderQueue<T> implements OrderQueueInterface<T> {
 
     private Node<T> firstNode;
     private Node<T> lastNode;
     private int lastOdFrequency;
     private int size;
 
-    public DLinkedQueue() {
+    public OrderQueue() {
         firstNode = null;
         lastNode = null;
         size=0;
@@ -120,7 +120,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                                 }
                             }
                         } catch (ParseException ex) {
-                            Logger.getLogger(DLinkedQueue.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } else {
@@ -150,7 +150,7 @@ public class DLinkedQueue<T> implements QueueInterface<T> {
                         }
                     } catch (ParseException ex) {
                         ck = false;
-                        Logger.getLogger(DLinkedQueue.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OrderQueue.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 

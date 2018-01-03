@@ -5,8 +5,7 @@
  */
 package client;
 
-import ADT.DLinkedQueue;
-import ADT.QueueInterface;
+import ADT.OrderQueue;
 import ADT.StackImplementation;
 import ADT.StackInterface;
 import entity.Customer;
@@ -24,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ADT.OrderQueueInterface;
 
 /**
  *
@@ -31,8 +31,8 @@ import java.util.logging.Logger;
  */
 public class moduleC {
 
-    static QueueInterface<OrderList> OLqueue = new DLinkedQueue<>();
-    static QueueInterface<Order> ODqueue = new DLinkedQueue<>();
+    static OrderQueueInterface<OrderList> OLqueue = new OrderQueue<>();
+    static OrderQueueInterface<Order> ODqueue = new OrderQueue<>();
 
     Scanner sc = new Scanner(System.in);
     FoodDeliveryService FCS = new FoodDeliveryService();
